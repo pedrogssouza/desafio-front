@@ -14,15 +14,16 @@ export default function ProfileIcon(props) {
           className="profile-icon mr-xl mt-lg"
           src={profile}
           onClick={() => setShowDropdown(!showDropdown)}
+          alt="profile-icon"
         />
         {showDropdown ? (
           <div className="dropdown flex-column content-center items-center mr-xl mt-md">
             <div className="flex-row items-center">
-              <img src={edit} />
+              <img src={edit} alt="edit" />
               <span>Editar</span>
             </div>
             <div onClick={handleLogout} className="flex-row items-center">
-              <img src={logout} />
+              <img src={logout} alt="logout" />
               <span>Deslogar</span>
             </div>
           </div>
