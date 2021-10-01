@@ -1,0 +1,33 @@
+.main {
+  width: 100%;
+}
+
+.profile-container {
+  margin-left: auto;
+  flex-direction: column;
+  display: flex;
+  align-items: flex-end;
+}
+
+.profile-icon {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+
+.dropdown {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  background-color: white;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  gap: 16px;
+}
+
+.dropdown > div {
+  height: 24px;
+  gap: 8px;
+  cursor: pointer;
+}

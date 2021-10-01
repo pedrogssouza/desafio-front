@@ -1,0 +1,18 @@
+.btn-pink {
+  font-weight: 600;
+  color: white;
+  width: 160px;
+  min-height: 40px;
+  border-radius: 20px;
+  outline: none;
+  border: 0;
+}
+
+.on {
+  background-color: #da0175;
+  cursor: pointer;
+}
+
+.off {
+  background-color: rgba(218, 1, 117, 35%);
+}

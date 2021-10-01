@@ -1,0 +1,44 @@
+.route-selected {
+  background-color: rgba(55, 73, 82, 1);
+}
+
+.sidebar-content {
+  height: 100%;
+  width: 280px;
+  background-color: rgba(38, 50, 56, 1);
+}
+
+.sidebar-btn {
+  margin-top: auto;
+  font-weight: 400;
+}
+
+.sidebar-links-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 40px 40px 1fr;
+  grid-template-rows: repeat(3, 48px);
+  grid-row-gap: 8px;
+}
+
+.sidebar-link {
+  text-decoration: none;
+  color: white;
+  grid-column: 1 / span 3;
+  padding-left: 48px;
+}
+
+.sidebar-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.first-link {
+  grid-row: 1;
+}
+.second-link {
+  grid-row: 2;
+}
+.third-link {
+  grid-row: 3;
+}
