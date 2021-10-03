@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import PasswordComponent from "../../components/PasswordComponent";
 import { useEffect, useState } from "react";
+import useApi from "../../useApi";
 
 function SignUp() {
   const { handleSubmit, register } = useForm();
@@ -11,22 +12,7 @@ function SignUp() {
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
 
-  async function submit(data) {
-    const response = await fetch(
-      "https://sistema-cobranca-localhost071.herokuapp.com/cadastro",
-      {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const responseData = await response.json();
-
-    console.log(responseData);
-  }
+  const { signUpFunction } = useApi();
 
   useEffect(() => {
     if (inputPassword && inputEmail && inputName) {
@@ -39,7 +25,7 @@ function SignUp() {
   return (
     <div className="form-sign">
       <form
-        onSubmit={handleSubmit(submit)}
+        onSubmit={handleSubmit(signUpFunction)}
         className="form-container flex-column items-center"
       >
         <img src={academy} alt="cubos-academy" className="mb-md"></img>
