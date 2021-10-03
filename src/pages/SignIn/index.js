@@ -3,16 +3,14 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import PasswordComponent from "../../components/PasswordComponent";
 import { useEffect, useState } from "react";
+import useApi from "../../useApi";
 
 function SignIn() {
   const { handleSubmit, register } = useForm();
   const [buttonOn, setButtonOn] = useState(false);
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
-
-  function submit(data) {
-    console.log(data);
-  }
+  const { loginFunction } = useApi();
 
   useEffect(() => {
     if (inputPassword && inputEmail) {
@@ -25,7 +23,7 @@ function SignIn() {
   return (
     <div className="form-sign">
       <form
-        onSubmit={handleSubmit(submit)}
+        onSubmit={handleSubmit(loginFunction)}
         className="form-container flex-column items-center"
       >
         <img src={academy} alt="cubos-academy" className="mb-lg"></img>

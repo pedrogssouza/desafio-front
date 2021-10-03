@@ -1,12 +1,17 @@
 import "./styles.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import profile from "../../assets/profile.svg";
 import edit from "../../assets/edit-icon.svg";
 import logout from "../../assets/log-out.svg";
+import { AuthContext } from "../../contexts/auth";
 
 export default function ProfileIcon(props) {
   const [showDropdown, setShowDropdown] = useState(false);
-  function handleLogout() {}
+  const { setToken } = useContext(AuthContext);
+  function handleLogout() {
+    setToken("");
+    localStorage.removeItem("token");
+  }
   return (
     <div className="main">
       <div className="profile-container">
