@@ -10,7 +10,7 @@ function SignIn() {
   const [buttonOn, setButtonOn] = useState(false);
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
-  const { loginFunction } = useApi();
+  const { signInFunction } = useApi();
 
   useEffect(() => {
     if (inputPassword && inputEmail) {
@@ -23,7 +23,7 @@ function SignIn() {
   return (
     <div className="form-sign">
       <form
-        onSubmit={handleSubmit(loginFunction)}
+        onSubmit={handleSubmit(signInFunction)}
         className="form-container flex-column items-center"
       >
         <img src={academy} alt="cubos-academy" className="mb-lg"></img>
