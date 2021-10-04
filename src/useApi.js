@@ -29,8 +29,6 @@ export default function useApi() {
   async function signUpFunction(data) {
     const response = await postRequest("/cadastro", data);
 
-    const responseData = await response.json();
-    console.log(responseData);
     if (response.ok) {
       history.push("/login");
       return;
@@ -44,8 +42,6 @@ export default function useApi() {
       data,
       token
     );
-
-    const responseData = await response.json();
 
     if (response.ok) {
       setEditProfile(false);
