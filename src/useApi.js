@@ -45,6 +45,7 @@ export default function useApi() {
 
     if (response.ok) {
       setEditProfile(false);
+      console.log("oi");
       return;
     }
   }
@@ -58,6 +59,7 @@ export default function useApi() {
       return responseData;
     }
   }
+
   return {
     signInFunction,
     signUpFunction,
