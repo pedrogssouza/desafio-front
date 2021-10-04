@@ -60,10 +60,26 @@ export default function useApi() {
     }
   }
 
+  async function addClientFunction(data) {
+    const response = await postProtectedRequest(
+      "/usuario/cadastro",
+      "POST",
+      data,
+      token
+    );
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      return;
+    }
+  }
+
   return {
     signInFunction,
     signUpFunction,
     editProfileFunction,
     getProfileFunction,
+    addClientFunction,
   };
 }

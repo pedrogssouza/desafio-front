@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import useApi from "../../useApi";
 import "./styles.css";
 
 export default function AddClient(props) {
@@ -8,6 +9,7 @@ export default function AddClient(props) {
   const [inputName, setInputName] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputCpf, setInputCpf] = useState("");
+  const { addClientFunction } = useApi();
 
   useEffect(() => {
     if (inputName && inputEmail && inputCpf) {
@@ -23,7 +25,7 @@ export default function AddClient(props) {
       <div className="add-clients-container">
         <form
           className="add-clients-form flex-column"
-          onSubmit={handleSubmit()}
+          onSubmit={handleSubmit(addClientFunction)}
         >
           <div className="add-clients-input-container flex-column">
             <label htmlFor="name" className="add-clients-form-label">
@@ -113,7 +115,10 @@ export default function AddClient(props) {
          items-center flex-end"
           >
             <button className="btn-white">Cancelar</button>
-            <button className={buttonOn ? `btn-pink on` : `btn-pink off `}>
+            <button
+              type="submit"
+              className={buttonOn ? `btn-pink on` : `btn-pink off `}
+            >
               Adicionar cliente
             </button>
           </div>
