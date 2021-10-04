@@ -1,0 +1,5 @@
+.home-content {
+  display: flex;
+  margin-left: 60px;
+  gap: 60px;
+}
