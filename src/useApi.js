@@ -45,6 +45,7 @@ export default function useApi() {
 
     if (response.ok) {
       setEditProfile(false);
+      console.log("oi");
       return;
     }
   }
@@ -58,10 +59,27 @@ export default function useApi() {
       return responseData;
     }
   }
+
+  async function addClientFunction(data) {
+    const response = await postProtectedRequest(
+      "/usuario/cadastro",
+      "POST",
+      data,
+      token
+    );
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      return;
+    }
+  }
+
   return {
     signInFunction,
     signUpFunction,
     editProfileFunction,
     getProfileFunction,
+    addClientFunction,
   };
 }

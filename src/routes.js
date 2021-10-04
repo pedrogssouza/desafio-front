@@ -9,6 +9,7 @@ import {
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import AddClient from "./pages/AddClients";
 import Sidebar from "./components/Sidebar";
 import ProfileIcon from "./components/ProfileIcon";
 import { useContext, useState } from "react";
@@ -40,6 +41,7 @@ export default function Routes() {
               <Sidebar>
                 <ProfileIcon>
                   <Route path="/" exact component={Home} />
+                  <Route path="/clientes" component={AddClient} />
                 </ProfileIcon>
               </Sidebar>
             </ProtectedRoutes>
