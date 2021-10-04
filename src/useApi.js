@@ -2,7 +2,11 @@ import { useContext } from "react";
 import { useHistory } from "react-router";
 import { AuthContext } from "./contexts/auth";
 import { EditProfileContext } from "./contexts/editProfile";
-import { postRequest, postProtectedRequest } from "./requests";
+import {
+  postRequest,
+  postProtectedRequest,
+  getProtectedRequest,
+} from "./requests";
 
 export default function useApi() {
   const { token, setToken } = useContext(AuthContext);
@@ -48,5 +52,20 @@ export default function useApi() {
       return;
     }
   }
-  return { signInFunction, signUpFunction, editProfileFunction };
+
+  async function getProfileFunction() {
+    const response = await getProtectedRequest("/cadastro", token);
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      return responseData;
+    }
+  }
+  return {
+    signInFunction,
+    signUpFunction,
+    editProfileFunction,
+    getProfileFunction,
+  };
 }

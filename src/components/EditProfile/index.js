@@ -21,11 +21,18 @@ export function EditProfileComponent() {
   const classes = useStyles();
   const { editProfile, setEditProfile } = useContext(EditProfileContext);
   const { handleSubmit, register } = useForm();
-  const { editProfileFunction } = useApi();
+  const { editProfileFunction, getProfileFunction } = useApi();
 
   const [buttonOn, setButtonOn] = useState(false);
   const [inputName, setInputName] = useState("");
   const [inputEmail, setInputEmail] = useState("");
+
+  useEffect(async () => {
+    const profile = await getProfileFunction();
+    setInputName(profile.nome);
+    setInputEmail(profile.email);
+  }, []);
+
   useEffect(() => {
     if (inputName && inputEmail) {
       setButtonOn(true);
@@ -53,6 +60,7 @@ export function EditProfileComponent() {
               <input
                 id="name"
                 {...register("nome", { required: true })}
+                value={inputName}
                 onChange={(e) => setInputName(e.target.value)}
               />
             </div>
@@ -65,6 +73,7 @@ export function EditProfileComponent() {
               <input
                 id="email"
                 placeholder="exemplo@gmail.com"
+                value={inputEmail}
                 {...register("email", { required: true })}
                 onChange={(e) => setInputEmail(e.target.value)}
               />
