@@ -13,6 +13,7 @@ import Sidebar from "./components/Sidebar";
 import ProfileIcon from "./components/ProfileIcon";
 import { useContext, useState } from "react";
 import { AuthContext } from "./contexts/auth";
+import { EditProfileContext } from "./contexts/editProfile";
 
 function ProtectedRoutes(props) {
   const { token } = useContext(AuthContext);
@@ -27,21 +28,24 @@ export default function Routes() {
     const token = localStorage.getItem("token");
     return token || "";
   });
+  const [editProfile, setEditProfile] = useState(false);
   return (
     <AuthContext.Provider value={{ token, setToken }}>
-      <Router>
-        <Switch>
-          <Route path="/login" component={SignIn} />
-          <Route path="/cadastro" component={SignUp} />
-          <ProtectedRoutes>
-            <Sidebar>
-              <ProfileIcon>
-                <Route path="/" exact component={Home} />
-              </ProfileIcon>
-            </Sidebar>
-          </ProtectedRoutes>
-        </Switch>
-      </Router>
+      <EditProfileContext.Provider value={{ editProfile, setEditProfile }}>
+        <Router>
+          <Switch>
+            <Route path="/login" component={SignIn} />
+            <Route path="/cadastro" component={SignUp} />
+            <ProtectedRoutes>
+              <Sidebar>
+                <ProfileIcon>
+                  <Route path="/" exact component={Home} />
+                </ProfileIcon>
+              </Sidebar>
+            </ProtectedRoutes>
+          </Switch>
+        </Router>
+      </EditProfileContext.Provider>
     </AuthContext.Provider>
   );
 }

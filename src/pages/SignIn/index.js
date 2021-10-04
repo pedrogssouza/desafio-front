@@ -28,7 +28,9 @@ function SignIn() {
       >
         <img src={academy} alt="cubos-academy" className="mb-lg"></img>
         <div>
-          <label htmlFor="email">E-mail</label>
+          <label className="mb-sm" htmlFor="email">
+            E-mail
+          </label>
           <div className="input-container ">
             <input
               id="email"
