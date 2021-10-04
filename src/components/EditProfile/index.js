@@ -27,10 +27,13 @@ export function EditProfileComponent() {
   const [inputName, setInputName] = useState("");
   const [inputEmail, setInputEmail] = useState("");
 
-  useEffect(async () => {
-    const profile = await getProfileFunction();
-    setInputName(profile.nome);
-    setInputEmail(profile.email);
+  useEffect(() => {
+    async function getInitialProfile() {
+      const profile = await getProfileFunction();
+      setInputName(profile.nome);
+      setInputEmail(profile.email);
+    }
+    getInitialProfile();
   }, []);
 
   useEffect(() => {
