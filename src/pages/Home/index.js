@@ -2,6 +2,7 @@ import "./styles.css";
 import clients from "../../assets/clients.svg";
 import charges from "../../assets/charges.svg";
 import CountsContainer from "../../components/HomeCountComponent/index.js";
+import LoadingComponent from "../../components/Loading";
 
 function Home() {
   const containers = [
@@ -54,6 +55,7 @@ function Home() {
           />
         );
       })}
+      <LoadingComponent />
     </div>
   );
 }

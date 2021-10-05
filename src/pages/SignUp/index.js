@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import PasswordComponent from "../../components/PasswordComponent";
 import { useEffect, useState } from "react";
 import useApi from "../../useApi";
+import LoadingComponent from "../../components/Loading";
 
 function SignUp() {
   const { handleSubmit, register } = useForm();
@@ -67,6 +68,7 @@ function SignUp() {
       <p className="text-center">
         Já possui uma conta? <Link to="/login">Acesse agora!</Link>
       </p>
+      <LoadingComponent />
     </div>
   );
 }
