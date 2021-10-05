@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { EditProfileContext } from "../../contexts/editProfile.js";
 import useApi from "../../useApi.js";
 import PasswordComponent from "../PasswordComponent/index.js";
+import LoadingComponent from "../Loading";
+import ResponseComponent from "../ResponseConfirmation";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -26,12 +28,16 @@ export function EditProfileComponent() {
   const [buttonOn, setButtonOn] = useState(false);
   const [inputName, setInputName] = useState("");
   const [inputEmail, setInputEmail] = useState("");
+  const [inputPhone, setInputPhone] = useState("");
+  const [inputCpf, setInputCpf] = useState("");
 
   useEffect(() => {
     async function getInitialProfile() {
       const profile = await getProfileFunction();
       setInputName(profile.nome);
       setInputEmail(profile.email);
+      setInputPhone(profile.telefone);
+      setInputCpf(profile.cpf);
     }
     getInitialProfile();
   }, []);
@@ -98,6 +104,8 @@ export function EditProfileComponent() {
                 id="phone"
                 placeholder="(71) 9 9333-2222"
                 {...register("telefone")}
+                value={inputPhone}
+                onChange={(e) => setInputPhone(e.target.value)}
               />
             </div>
           </div>
@@ -110,6 +118,8 @@ export function EditProfileComponent() {
                 id="cpf"
                 placeholder="222.222.222-22"
                 {...register("cpf")}
+                value={inputCpf}
+                onChange={(e) => setInputCpf(e.target.value)}
               />
             </div>
           </div>
@@ -121,6 +131,8 @@ export function EditProfileComponent() {
           </button>
         </form>
       </div>
+      <LoadingComponent />
+      <ResponseComponent />
     </Backdrop>
   );
 }

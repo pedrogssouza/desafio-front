@@ -5,6 +5,7 @@ import PasswordComponent from "../../components/PasswordComponent";
 import { useEffect, useState } from "react";
 import useApi from "../../useApi";
 import LoadingComponent from "../../components/Loading";
+import ResponseComponent from "../../components/ResponseConfirmation";
 
 function SignIn() {
   const { handleSubmit, register } = useForm();
@@ -58,6 +59,7 @@ function SignIn() {
         Não tem uma conta? <Link to="/cadastro">Cadastre-se!</Link>
       </p>
       <LoadingComponent />
+      <ResponseComponent />
     </div>
   );
 }

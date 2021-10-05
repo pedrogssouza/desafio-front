@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import LoadingComponent from "../../components/Loading";
+import ResponseComponent from "../../components/ResponseConfirmation";
 import useApi from "../../useApi";
 import "./styles.css";
 
@@ -126,6 +127,7 @@ export default function AddClient(props) {
         </form>
       </div>
       <LoadingComponent />
+      <ResponseComponent />
     </div>
   );
 }
