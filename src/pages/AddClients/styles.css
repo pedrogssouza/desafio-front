@@ -1,6 +1,11 @@
 .add-clients-content {
-  margin-left: 60px;
+  margin: 0 60px;
   z-index: -99;
+}
+
+.add-clients-content button {
+  width: 240px;
+  margin-left: 24px;
 }
 
 .add-clients-container {
@@ -10,7 +15,7 @@
 }
 
 .add-clients-form {
-  padding: 0 240px;
+  padding: 0 200px;
 }
 
 .add-clients-form-label {

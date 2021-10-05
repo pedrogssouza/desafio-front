@@ -23,10 +23,10 @@ export default function AddClient(props) {
 
   return (
     <div className="add-clients-content flex-column">
-      <h1 className="add-clients-form-title">ADICIONAR CLIENTE</h1>
+      <h1 className="add-clients-form-title mb-md">ADICIONAR CLIENTE</h1>
       <div className="add-clients-container">
         <form
-          className="add-clients-form flex-column"
+          className="add-clients-form flex-column "
           onSubmit={handleSubmit(addClientFunction)}
         >
           <div className="add-clients-input-container flex-column">

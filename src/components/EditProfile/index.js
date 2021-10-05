@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
+    display: "flow-root",
   },
   label: {
     fontSize: 16,
@@ -62,12 +63,12 @@ export function EditProfileComponent() {
           </p>
           <h1 className="title-form">EDITAR USUÁRIO</h1>
           <div>
-            <label className={classes.label} htmlFor="name">
-              Nome
-            </label>
             <div className="input-container ">
+              <label className={classes.label} htmlFor="name-edit">
+                Nome
+              </label>
               <input
-                id="name"
+                id="name-edit"
                 {...register("nome", { required: true })}
                 value={inputName}
                 onChange={(e) => setInputName(e.target.value)}
@@ -75,12 +76,12 @@ export function EditProfileComponent() {
             </div>
           </div>
           <div>
-            <label className={classes.label} htmlFor="email">
-              E-mail
-            </label>
             <div className="input-container ">
+              <label className={classes.label} htmlFor="email-edit">
+                E-mail
+              </label>
               <input
-                id="email"
+                id="email-edit"
                 placeholder="exemplo@gmail.com"
                 value={inputEmail}
                 {...register("email", { required: true })}
@@ -96,10 +97,10 @@ export function EditProfileComponent() {
             class={classes.label}
           />
           <div>
-            <label className={classes.label} htmlFor="phone">
-              Telefone
-            </label>
             <div className="input-container ">
+              <label className={classes.label} htmlFor="phone">
+                Telefone
+              </label>
               <input
                 id="phone"
                 placeholder="(71) 9 9333-2222"
@@ -110,10 +111,10 @@ export function EditProfileComponent() {
             </div>
           </div>
           <div>
-            <label className={classes.label} htmlFor="cpf">
-              CPF
-            </label>
             <div className="input-container ">
+              <label className={classes.label} htmlFor="cpf">
+                CPF
+              </label>
               <input
                 id="cpf"
                 placeholder="222.222.222-22"

@@ -16,7 +16,7 @@
 .form-container input {
   outline: none;
   border: 0;
-  color: #4c4c4c;
+  color: #050505;
   width: 82%;
 }
 
@@ -33,6 +33,7 @@
 
 .input-container {
   height: min-content;
+  margin: 8px 0;
 }
 
 .input-container::after {

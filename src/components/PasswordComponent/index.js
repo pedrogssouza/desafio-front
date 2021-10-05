@@ -6,11 +6,11 @@ import React, { useState } from "react";
 export default function PasswordComponent(props) {
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <div className="password-container">
-      <label className={props.class || ""} htmlFor={props.id}>
-        {props.label}
-      </label>
-      <div className="input-container input-password-container">
+    <div>
+      <div className="input-container">
+        <label className={props.class || ""} htmlFor={props.id}>
+          {props.label}
+        </label>
         <input
           {...props.register()}
           id={props.id}

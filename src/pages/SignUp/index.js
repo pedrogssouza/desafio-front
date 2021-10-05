@@ -61,7 +61,7 @@ function SignUp() {
         />
         <button
           type="submit"
-          className={buttonOn ? `btn-pink on mt-md` : `btn-pink off mt-md`}
+          className={buttonOn ? `btn-pink on mt-lg` : `btn-pink off mt-lg`}
         >
           Criar conta
         </button>
