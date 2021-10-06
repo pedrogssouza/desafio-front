@@ -31,6 +31,14 @@
   margin-bottom: 16px;
 }
 
+input {
+  padding-left: 8px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
 .input-container {
   height: min-content;
   margin: 8px 0;

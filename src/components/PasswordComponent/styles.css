@@ -2,3 +2,7 @@
   padding: 0 0 0 16px;
   height: 20px;
 }
+
+input[type="password"] {
+  color: #4c4c4c;
+}

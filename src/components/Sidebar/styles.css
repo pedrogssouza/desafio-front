@@ -1,13 +1,9 @@
-aside {
-  height: min-content;
-}
-
 .route-selected {
   background-color: rgba(55, 73, 82, 1);
 }
 
 .sidebar-content {
-  height: 120vh;
+  min-height: 100vh;
   width: 280px;
   background-color: rgba(38, 50, 56, 1);
 }

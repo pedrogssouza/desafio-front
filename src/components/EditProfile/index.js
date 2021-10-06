@@ -103,7 +103,7 @@ export function EditProfileComponent() {
               </label>
               <input
                 id="phone"
-                placeholder="(71) 9 9333-2222"
+                placeholder="(71)99333-2222"
                 {...register("telefone")}
                 value={inputPhone}
                 onChange={(e) => setInputPhone(e.target.value)}
