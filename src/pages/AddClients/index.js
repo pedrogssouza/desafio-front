@@ -53,16 +53,7 @@ export default function AddClient(props) {
       <div className="add-clients-container">
         <form
           className="add-clients-form flex-column "
-          onSubmit={handleSubmit((data) => {
-            if (data.cep <= 8) {
-              alert(`
-              Insira o completo CEP com os caracteres especiais
-              Ex: 20100-300
-              `);
-              return;
-            }
-            addClientFunction(data);
-          })}
+          onSubmit={handleSubmit(addClientFunction)}
         >
           <div className="add-clients-input-container flex-column">
             <label htmlFor="name" className="add-clients-form-label">
