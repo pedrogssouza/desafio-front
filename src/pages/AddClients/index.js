@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import LoadingComponent from "../../components/Loading";
 import ResponseComponent from "../../components/ResponseConfirmation";
-import useApi from "../../useApi";
-import getDataByCep from "../../viaCep";
+import useApi from "../../services/useApi";
+import getDataByCep from "../../services/viaCep";
 import "./styles.css";
 
 export default function AddClient(props) {
@@ -48,7 +48,7 @@ export default function AddClient(props) {
   }, [inputCep]);
 
   return (
-    <div className="add-clients-content flex-column">
+    <div className="clients-content flex-column">
       <h1 className="add-clients-form-title mb-md">ADICIONAR CLIENTE</h1>
       <div className="add-clients-container">
         <form
@@ -80,11 +80,14 @@ export default function AddClient(props) {
           </div>
           <div className="flex-row gap">
             <div className="add-clients-input-container flex-column">
-              <label className="add-clients-form-label" htmlFor="cpf">
+              <label
+                className="add-clients-form-label"
+                htmlFor="cpf-add-client"
+              >
                 CPF
               </label>
               <input
-                id="cpf"
+                id="cpf-add-client"
                 value={inputCpf}
                 placeholder="222.222.222-22"
                 {...register("cpf", { required: true })}
@@ -92,11 +95,14 @@ export default function AddClient(props) {
               />
             </div>
             <div className="add-clients-input-container flex-column">
-              <label className="add-clients-form-label" htmlFor="phone">
+              <label
+                className="add-clients-form-label"
+                htmlFor="phone-add-client"
+              >
                 Telefone
               </label>
               <input
-                id="phone"
+                id="phone-add-client"
                 {...register("telefone")}
                 placeholder="(71)99333-2222"
               />

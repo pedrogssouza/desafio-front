@@ -1,9 +1,9 @@
-.add-clients-content {
+.clients-content {
   margin: 0 60px;
   z-index: -99;
 }
 
-.add-clients-content button {
+.clients-content button {
   width: 240px;
   margin-left: 24px;
 }

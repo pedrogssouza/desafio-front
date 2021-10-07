@@ -17,6 +17,7 @@ import { AuthContext } from "./contexts/auth";
 import { EditProfileContext } from "./contexts/editProfile";
 import { LoadingContext } from "./contexts/loadingContext";
 import { ResponseContext } from "./contexts/response";
+import Clients from "./pages/Clients";
 
 function ProtectedRoutes(props) {
   const { token } = useContext(AuthContext);
@@ -47,7 +48,12 @@ export default function Routes() {
                   <Sidebar>
                     <ProfileIcon>
                       <Route path="/" exact component={Home} />
-                      <Route path="/clientes" component={AddClient} />
+                      <Route path="/clientes" exact component={Clients} />
+                      <Route
+                        path="/clientes/adicionar"
+                        exact
+                        component={AddClient}
+                      />
                     </ProfileIcon>
                   </Sidebar>
                 </ProtectedRoutes>
