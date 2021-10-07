@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { useHistory } from "react-router";
-import { AuthContext } from "./contexts/auth";
-import { EditProfileContext } from "./contexts/editProfile";
-import { LoadingContext } from "./contexts/loadingContext";
-import { ResponseContext } from "./contexts/response";
+import { AuthContext } from "../contexts/auth";
+import { EditProfileContext } from "../contexts/editProfile";
+import { LoadingContext } from "../contexts/loadingContext";
+import { ResponseContext } from "../contexts/response";
 import {
   postRequest,
   postProtectedRequest,
@@ -101,6 +101,8 @@ export default function useApi() {
   }
 
   async function getProfileFunction() {
+    setResponse({});
+
     setLoading(true);
 
     const response = await getProtectedRequest("/cadastro", token);
@@ -110,8 +112,17 @@ export default function useApi() {
     setLoading(false);
 
     if (response.ok) {
+      setResponse({
+        data: responseData,
+        type: "success",
+      });
       return responseData;
     }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
   }
 
   async function addClientFunction(data) {

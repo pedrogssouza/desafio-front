@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import LoadingComponent from "../../components/Loading";
 import ResponseComponent from "../../components/ResponseConfirmation";
+import { ResponseContext } from "../../contexts/response";
+import { testCpf, maskCpf } from "../../services/cpf";
 import useApi from "../../services/useApi";
 import getDataByCep from "../../services/viaCep";
 import "./styles.css";
 
-export default function AddClient(props) {
+export default function AddClient() {
+  const { setResponse } = useContext(ResponseContext);
   const { handleSubmit, register } = useForm();
   const [buttonOn, setButtonOn] = useState(false);
   const [inputName, setInputName] = useState("");
@@ -53,7 +56,17 @@ export default function AddClient(props) {
       <div className="add-clients-container">
         <form
           className="add-clients-form flex-column "
-          onSubmit={handleSubmit(addClientFunction)}
+          onSubmit={handleSubmit((data) => {
+            if (!testCpf(inputCpf.replaceAll(".", "").replace("-", ""))) {
+              setResponse({
+                data: "CPF inválido",
+                type: "error",
+              });
+              return;
+            }
+
+            addClientFunction(data);
+          })}
         >
           <div className="add-clients-input-container flex-column">
             <label htmlFor="name" className="add-clients-form-label">
@@ -87,11 +100,14 @@ export default function AddClient(props) {
                 CPF
               </label>
               <input
+                maxLength="14"
                 id="cpf-add-client"
                 value={inputCpf}
                 placeholder="222.222.222-22"
                 {...register("cpf", { required: true })}
-                onChange={(e) => setInputCpf(e.target.value)}
+                onChange={(e) => {
+                  setInputCpf(maskCpf(e.target.value));
+                }}
               />
             </div>
             <div className="add-clients-input-container flex-column">
