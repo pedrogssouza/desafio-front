@@ -18,6 +18,7 @@ import { EditProfileContext } from "./contexts/editProfile";
 import { LoadingContext } from "./contexts/loadingContext";
 import { ResponseContext } from "./contexts/response";
 import Clients from "./pages/Clients";
+import { ClientsContext } from "./contexts/clients";
 
 function ProtectedRoutes(props) {
   const { token } = useContext(AuthContext);
@@ -35,6 +36,7 @@ export default function Routes() {
   const [editProfile, setEditProfile] = useState(false);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState({});
+  const [clientsDisplay, setClientsDisplay] = useState([]);
   return (
     <AuthContext.Provider value={{ token, setToken }}>
       <EditProfileContext.Provider value={{ editProfile, setEditProfile }}>
@@ -48,12 +50,16 @@ export default function Routes() {
                   <Sidebar>
                     <ProfileIcon>
                       <Route path="/" exact component={Home} />
-                      <Route path="/clientes" exact component={Clients} />
-                      <Route
-                        path="/clientes/adicionar"
-                        exact
-                        component={AddClient}
-                      />
+                      <ClientsContext.Provider
+                        value={{ clientsDisplay, setClientsDisplay }}
+                      >
+                        <Route path="/clientes" exact component={Clients} />
+                        <Route
+                          path="/clientes/adicionar"
+                          exact
+                          component={AddClient}
+                        />
+                      </ClientsContext.Provider>
                     </ProfileIcon>
                   </Sidebar>
                 </ProtectedRoutes>

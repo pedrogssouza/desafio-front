@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useHistory } from "react-router";
 import { AuthContext } from "../contexts/auth";
+import { ClientsContext } from "../contexts/clients";
 import { EditProfileContext } from "../contexts/editProfile";
 import { LoadingContext } from "../contexts/loadingContext";
 import { ResponseContext } from "../contexts/response";
@@ -15,6 +16,7 @@ export default function useApi() {
   const { setEditProfile } = useContext(EditProfileContext);
   const { setLoading } = useContext(LoadingContext);
   const { setResponse } = useContext(ResponseContext);
+  const { setClientsDisplay } = useContext(ClientsContext);
   const history = useHistory();
 
   async function signInFunction(data) {
@@ -131,7 +133,7 @@ export default function useApi() {
     setLoading(true);
 
     const response = await postProtectedRequest(
-      "/usuario/cadastro",
+      "/cliente/cadastro",
       "POST",
       data,
       token
@@ -155,11 +157,34 @@ export default function useApi() {
     });
   }
 
+  async function getClientsFunction() {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await getProtectedRequest("/cliente/cadastro", token);
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      setClientsDisplay(responseData);
+      return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
   return {
     signInFunction,
     signUpFunction,
     editProfileFunction,
     getProfileFunction,
     addClientFunction,
+    getClientsFunction,
   };
 }
