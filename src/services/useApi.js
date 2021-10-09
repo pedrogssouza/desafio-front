@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useHistory } from "react-router";
 import { AuthContext } from "../contexts/auth";
-import { ClientsContext } from "../contexts/clients";
+import { ClientsArrayContext } from "../contexts/clientsArray";
 import { EditProfileContext } from "../contexts/editProfile";
 import { LoadingContext } from "../contexts/loadingContext";
 import { ResponseContext } from "../contexts/response";
@@ -16,7 +16,7 @@ export default function useApi() {
   const { setEditProfile } = useContext(EditProfileContext);
   const { setLoading } = useContext(LoadingContext);
   const { setResponse } = useContext(ResponseContext);
-  const { setClientsDisplay } = useContext(ClientsContext);
+  const { setClientsDisplay } = useContext(ClientsArrayContext);
   const history = useHistory();
 
   async function signInFunction(data) {
@@ -162,7 +162,7 @@ export default function useApi() {
 
     setLoading(true);
 
-    const response = await getProtectedRequest("/cliente/cadastro", token);
+    const response = await getProtectedRequest("/cliente", token);
 
     const responseData = await response.json();
 
@@ -179,6 +179,36 @@ export default function useApi() {
     });
   }
 
+  async function editClientFunction(data, id) {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await postProtectedRequest(
+      `/cliente/cadastro/${id}`,
+      "PUT",
+      data,
+      token
+    );
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      setResponse({
+        data: responseData,
+        type: "success",
+      });
+      return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
   return {
     signInFunction,
     signUpFunction,
@@ -186,5 +216,6 @@ export default function useApi() {
     getProfileFunction,
     addClientFunction,
     getClientsFunction,
+    editClientFunction,
   };
 }
