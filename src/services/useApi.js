@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useHistory } from "react-router";
 import { AuthContext } from "../contexts/auth";
+import { ClientDetailsContext } from "../contexts/clientDetails";
 import { ClientsArrayContext } from "../contexts/clientsArray";
 import { EditProfileContext } from "../contexts/editProfile";
 import { LoadingContext } from "../contexts/loadingContext";
@@ -17,6 +18,7 @@ export default function useApi() {
   const { setLoading } = useContext(LoadingContext);
   const { setResponse } = useContext(ResponseContext);
   const { setClientsDisplay } = useContext(ClientsArrayContext);
+  const { setClientDetails } = useContext(ClientDetailsContext);
   const history = useHistory();
 
   async function signInFunction(data) {
@@ -209,6 +211,28 @@ export default function useApi() {
     });
   }
 
+  async function getClientDetailsFunction(id) {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await getProtectedRequest(`/cliente/${id}`, token);
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      setClientDetails(responseData);
+      return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
   return {
     signInFunction,
     signUpFunction,
@@ -217,5 +241,6 @@ export default function useApi() {
     addClientFunction,
     getClientsFunction,
     editClientFunction,
+    getClientDetailsFunction,
   };
 }
