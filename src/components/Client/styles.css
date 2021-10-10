@@ -1,0 +1,50 @@
+.client {
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px 24px;
+  cursor: pointer;
+}
+
+.client:hover {
+  background-color: rgb(245, 243, 243);
+}
+
+.client-details h3 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.client p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  align-items: center;
+}
+
+.client-status {
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 15px;
+  text-transform: uppercase;
+}
+
+.em-dia {
+  color: #4ec06e;
+}
+
+.inadimplente {
+  color: #ff4d4d;
+}
+
+.edit-client {
+  cursor: pointer;
+}
+
+.client-details img {
+  width: 16px;
+  height: 16px;
+}

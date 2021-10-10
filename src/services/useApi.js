@@ -18,7 +18,7 @@ export default function useApi() {
   const { setLoading } = useContext(LoadingContext);
   const { setResponse } = useContext(ResponseContext);
   const { setClientsDisplay } = useContext(ClientsArrayContext);
-  const { setClientDetails } = useContext(ClientDetailsContext);
+  const { clientDetails, setClientDetails } = useContext(ClientDetailsContext);
   const history = useHistory();
 
   async function signInFunction(data) {
@@ -181,10 +181,12 @@ export default function useApi() {
     });
   }
 
-  async function editClientFunction(data, id) {
+  async function editClientFunction(data) {
     setResponse({});
 
     setLoading(true);
+
+    const id = clientDetails.id;
 
     const response = await postProtectedRequest(
       `/cliente/cadastro/${id}`,
@@ -219,6 +221,8 @@ export default function useApi() {
     const response = await getProtectedRequest(`/cliente/${id}`, token);
 
     const responseData = await response.json();
+
+    console.log(responseData);
 
     setLoading(false);
 
