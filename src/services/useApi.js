@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { useHistory } from "react-router";
-import { AuthContext } from "./contexts/auth";
-import { EditProfileContext } from "./contexts/editProfile";
-import { LoadingContext } from "./contexts/loadingContext";
-import { ResponseContext } from "./contexts/response";
+import { AuthContext } from "../contexts/auth";
+import { ClientDetailsContext } from "../contexts/clientDetails";
+import { ClientsArrayContext } from "../contexts/clientsArray";
+import { EditProfileContext } from "../contexts/editProfile";
+import { LoadingContext } from "../contexts/loadingContext";
+import { ResponseContext } from "../contexts/response";
 import {
   postRequest,
   postProtectedRequest,
@@ -15,6 +17,8 @@ export default function useApi() {
   const { setEditProfile } = useContext(EditProfileContext);
   const { setLoading } = useContext(LoadingContext);
   const { setResponse } = useContext(ResponseContext);
+  const { setClientsDisplay } = useContext(ClientsArrayContext);
+  const { clientDetails, setClientDetails } = useContext(ClientDetailsContext);
   const history = useHistory();
 
   async function signInFunction(data) {
@@ -101,6 +105,8 @@ export default function useApi() {
   }
 
   async function getProfileFunction() {
+    setResponse({});
+
     setLoading(true);
 
     const response = await getProtectedRequest("/cadastro", token);
@@ -110,8 +116,17 @@ export default function useApi() {
     setLoading(false);
 
     if (response.ok) {
+      setResponse({
+        data: responseData,
+        type: "success",
+      });
       return responseData;
     }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
   }
 
   async function addClientFunction(data) {
@@ -120,7 +135,7 @@ export default function useApi() {
     setLoading(true);
 
     const response = await postProtectedRequest(
-      "/usuario/cadastro",
+      "/cliente/cadastro",
       "POST",
       data,
       token
@@ -144,11 +159,90 @@ export default function useApi() {
     });
   }
 
+  async function getClientsFunction() {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await getProtectedRequest("/cliente", token);
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      setClientsDisplay(responseData);
+      return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
+  async function editClientFunction(data) {
+    setResponse({});
+
+    setLoading(true);
+
+    const id = clientDetails.id;
+
+    const response = await postProtectedRequest(
+      `/cliente/cadastro/${id}`,
+      "PUT",
+      data,
+      token
+    );
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      setResponse({
+        data: responseData,
+        type: "success",
+      });
+      return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
+  async function getClientDetailsFunction(id) {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await getProtectedRequest(`/cliente/${id}`, token);
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      setClientDetails(responseData[0]);
+      return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
   return {
     signInFunction,
     signUpFunction,
     editProfileFunction,
     getProfileFunction,
     addClientFunction,
+    getClientsFunction,
+    editClientFunction,
+    getClientDetailsFunction,
   };
 }

@@ -1,0 +1,19 @@
+.clients-display-details {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: #9dbbc3;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.005em;
+  color: #ffffff;
+  padding: 6px 24px;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.clients-grid {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+}

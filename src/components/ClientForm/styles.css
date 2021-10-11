@@ -1,0 +1,56 @@
+.clients-container button {
+  width: 240px;
+  margin-left: 24px;
+}
+
+.clients-container {
+  background-color: white;
+  padding: 32px 0;
+  border-radius: 16px;
+  width: 100%;
+  margin: 0 auto;
+}
+.clients-content {
+  margin: 0 60px;
+  padding: 0;
+  z-index: -99;
+}
+
+.clients-form {
+  padding: 0 15%;
+}
+
+.clients-form-label {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 15px;
+  color: #374952;
+  margin-bottom: 4px;
+}
+
+.clients-form input {
+  background: #ffffff;
+  border: 1px solid #374952;
+  box-sizing: border-box;
+  border-radius: 8px;
+  height: 40px;
+  margin-bottom: 32px;
+  width: 100%;
+  outline: none;
+}
+
+.clients-form input:focus {
+  border: 1px solid #da0175;
+}
+
+.clients-input-container {
+  width: 100%;
+}
+
+.gap {
+  gap: 16px;
+}
+
+.flex-end {
+  align-self: flex-end;
+}

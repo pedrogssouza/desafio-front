@@ -1,0 +1,51 @@
+.edit-client {
+  cursor: pointer;
+}
+
+.client-details img {
+  width: 16px;
+  height: 16px;
+}
+.client-detailing {
+  background-color: white;
+  color: #4c4c4c;
+  padding: 64px 40px;
+  height: 80%;
+  border-radius: 8px;
+}
+
+.client-detailing-info {
+  justify-content: space-between;
+}
+
+.client-detailing-header {
+  justify-content: space-between;
+}
+
+.client-detailing-header p {
+  font-weight: bold;
+}
+
+.email-phone {
+  gap: 16px;
+}
+
+.client-infos {
+  margin-right: auto;
+}
+
+.client-charges-info {
+  margin-left: auto;
+}
+
+.client-charge-id {
+  font-weight: bold;
+}
+
+.client-charge-value {
+  font-weight: 600;
+}
+
+.client-charge-date {
+  font-weight: 500;
+}

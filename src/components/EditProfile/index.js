@@ -3,7 +3,7 @@ import { Backdrop, makeStyles } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { EditProfileContext } from "../../contexts/editProfile.js";
-import useApi from "../../useApi.js";
+import useApi from "../../services/useApi.js";
 import PasswordComponent from "../PasswordComponent/index.js";
 import LoadingComponent from "../Loading";
 import ResponseComponent from "../ResponseConfirmation";
@@ -35,6 +35,11 @@ export function EditProfileComponent() {
   useEffect(() => {
     async function getInitialProfile() {
       const profile = await getProfileFunction();
+
+      if (profile === undefined) {
+        return;
+      }
+
       setInputName(profile.nome);
       setInputEmail(profile.email);
       setInputPhone(profile.telefone);

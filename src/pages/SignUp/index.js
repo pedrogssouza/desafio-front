@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import PasswordComponent from "../../components/PasswordComponent";
 import { useEffect, useState } from "react";
-import useApi from "../../useApi";
+import useApi from "../../services/useApi";
 import LoadingComponent from "../../components/Loading";
 import ResponseComponent from "../../components/ResponseConfirmation";
 
