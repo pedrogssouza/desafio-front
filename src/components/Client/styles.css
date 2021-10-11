@@ -39,12 +39,3 @@
 .inadimplente {
   color: #ff4d4d;
 }
-
-.edit-client {
-  cursor: pointer;
-}
-
-.client-details img {
-  width: 16px;
-  height: 16px;
-}

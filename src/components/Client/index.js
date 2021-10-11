@@ -4,9 +4,9 @@ import { useState } from "react";
 import edit from "../../assets/edit-icon.svg";
 import mail from "../../assets/mail.svg";
 import phone from "../../assets/phone.svg";
-import { ClientDetailsContext } from "../../contexts/clientDetails";
 import ClientForm from "../ClientForm";
 import useApi from "../../services/useApi";
+import ClientDetailing from "../ClientDetails";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -16,17 +16,25 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     width: "70%",
+    height: "100%",
     margin: "0 auto",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
   },
 }));
 
 export default function ClientComponent(props) {
   const [editClient, setEditClient] = useState(false);
+  const [clientDetailing, setClientDetailing] = useState(false);
   const { getClientDetailsFunction } = useApi();
 
   return (
     <div
-      onClick={() => getClientDetailsFunction(props.id)}
+      onClick={async () => {
+        await getClientDetailsFunction(props.id);
+        setClientDetailing(true);
+      }}
       className="clients-grid client mt-lg"
     >
       <div className="client-details flex-column">
@@ -63,10 +71,21 @@ export default function ClientComponent(props) {
         <img
           className="mr-md edit-client"
           src={edit}
-          onClick={() => setEditClient(true)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setEditClient(true);
+          }}
         />
       </p>
       <EditClient editClient={editClient} setEditClient={setEditClient} />
+      {clientDetailing ? (
+        <ClientDetailing
+          clientDetailing={clientDetailing}
+          setClientDetailing={setClientDetailing}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
@@ -79,10 +98,12 @@ function EditClient(props) {
       <div className={classes.container}>
         <ClientForm
           button={"Editar Cliente"}
-          closeButton={() => props.setEditClient(false)}
+          closeButton={(e) => {
+            e.stopPropagation();
+            props.setEditClient(false);
+          }}
           function={editClientFunction}
         />
-        X
       </div>
     </Backdrop>
   );

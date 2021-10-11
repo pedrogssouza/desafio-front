@@ -222,12 +222,10 @@ export default function useApi() {
 
     const responseData = await response.json();
 
-    console.log(responseData);
-
     setLoading(false);
 
     if (response.ok) {
-      setClientDetails(responseData);
+      setClientDetails(responseData[0]);
       return;
     }
 

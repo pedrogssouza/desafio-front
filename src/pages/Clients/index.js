@@ -16,10 +16,6 @@ export default function Clients(props) {
     getClientsFunction();
   }, []);
 
-  if (clientsDisplay.length !== 0) {
-    console.log(clientsDisplay);
-  }
-
   return (
     <div className="clients-content">
       <button
