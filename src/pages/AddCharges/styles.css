@@ -1,0 +1,65 @@
+.add-charges-form label {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 15px;
+  color: #374952;
+}
+
+.add-charges-form input {
+  border: 1px solid #374952;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 12px 24px 32px;
+  height: 72px;
+}
+
+#descricao::after {
+  content: "A descrição informada será impressa no boleto";
+  color: #868686;
+
+  width: 100%;
+}
+
+.add-charges-form input::placeholder {
+  margin-bottom: 8px;
+}
+
+.add-charges-form input:focus {
+  border: 1px solid #374952;
+}
+
+select {
+  border: 1px solid #374952;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 12px 24px;
+  width: 100%;
+  outline: none;
+}
+
+.select-items {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+.vencimento {
+  width: 100%;
+}
+
+#valor {
+  padding: 12px 24px;
+  height: min-content;
+}
+
+#vencimento {
+  height: min-content;
+  width: 100%;
+  padding: 12px 24px;
+}
+
+.cancelar {
+  margin-left: auto !important;
+}

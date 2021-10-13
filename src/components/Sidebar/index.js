@@ -5,8 +5,10 @@ import academy from "../../assets/academy-white.svg";
 import home from "../../assets/home.svg";
 import charges from "../../assets/charges.svg";
 import clients from "../../assets/clients.svg";
+import { useHistory } from "react-router";
 
 export default function Sidebar(props) {
+  const history = useHistory();
   return (
     <div className="page">
       <aside className="sidebar-content flex-column items-center">
@@ -38,7 +40,10 @@ export default function Sidebar(props) {
             Clientes
           </NavLink>
         </div>
-        <button className="sidebar-btn btn-pink on mb-xl">
+        <button
+          className="sidebar-btn btn-pink on mb-xl"
+          onClick={() => history.push("/cobrancas/adicionar")}
+        >
           Criar cobrança
         </button>
       </aside>
