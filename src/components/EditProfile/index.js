@@ -36,7 +36,7 @@ export function EditProfileComponent() {
     async function getInitialProfile() {
       const profile = await getProfileFunction();
 
-      if (profile === undefined) {
+      if (!profile) {
         return;
       }
 

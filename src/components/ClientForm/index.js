@@ -22,6 +22,7 @@ export default function ClientForm(props) {
   const [inputCity, setInputCity] = useState("");
   const [inputUf, setInputUf] = useState("");
   const [inputComplement, setInputComplement] = useState("");
+  const [inputPhone, setInputPhone] = useState("");
 
   useEffect(() => {
     setInputName(clientDetails.nome);
@@ -33,6 +34,7 @@ export default function ClientForm(props) {
     setInputCity(clientDetails.cidade);
     setInputUf(clientDetails.estado);
     setInputComplement(clientDetails.complemento);
+    setInputPhone(clientDetails.telefone);
   }, [clientDetails]);
 
   useEffect(() => {
@@ -129,6 +131,8 @@ export default function ClientForm(props) {
               id="phone-client"
               {...register("telefone")}
               placeholder="(71)99333-2222"
+              value={inputPhone}
+              onChange={(e) => setInputPhone(e.target.value)}
             />
           </div>
         </div>

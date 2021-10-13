@@ -118,10 +118,10 @@ export default function useApi() {
     setLoading(false);
 
     if (response.ok) {
-      setResponse({
-        data: responseData,
-        type: "success",
-      });
+      // setResponse({
+      //   data: responseData,
+      //   type: "success",
+      // });
       return responseData;
     }
 
