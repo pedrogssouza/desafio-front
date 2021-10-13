@@ -20,6 +20,9 @@ import { ResponseContext } from "./contexts/response";
 import Clients from "./pages/Clients";
 import { ClientsArrayContext } from "./contexts/clientsArray";
 import { ClientDetailsContext } from "./contexts/clientDetails";
+import Charges from "./pages/Charges";
+import { ChargesArrayContext } from "./contexts/chargesArray";
+import AddCharges from "./pages/AddCharges";
 
 function ProtectedRoutes(props) {
   const { token } = useContext(AuthContext);
@@ -39,6 +42,7 @@ export default function Routes() {
   const [response, setResponse] = useState({});
   const [clientsDisplay, setClientsDisplay] = useState([]);
   const [clientDetails, setClientDetails] = useState({});
+  const [chargesDisplay, setChargesDisplay] = useState([]);
   return (
     <AuthContext.Provider value={{ token, setToken }}>
       <EditProfileContext.Provider value={{ editProfile, setEditProfile }}>
@@ -50,25 +54,39 @@ export default function Routes() {
               <ClientDetailsContext.Provider
                 value={{ clientDetails, setClientDetails }}
               >
-                <Router>
-                  <Switch>
-                    <Route path="/login" component={SignIn} />
-                    <Route path="/cadastro" component={SignUp} />
-                    <ProtectedRoutes>
-                      <Sidebar>
-                        <ProfileIcon>
-                          <Route path="/" exact component={Home} />
-                          <Route path="/clientes" exact component={Clients} />
-                          <Route
-                            path="/clientes/adicionar"
-                            exact
-                            component={AddClient}
-                          />
-                        </ProfileIcon>
-                      </Sidebar>
-                    </ProtectedRoutes>
-                  </Switch>
-                </Router>
+                <ChargesArrayContext.Provider
+                  value={{ chargesDisplay, setChargesDisplay }}
+                >
+                  <Router>
+                    <Switch>
+                      <Route path="/login" component={SignIn} />
+                      <Route path="/cadastro" component={SignUp} />
+                      <ProtectedRoutes>
+                        <Sidebar>
+                          <ProfileIcon>
+                            <Route path="/" exact component={Home} />
+                            <Route path="/clientes" exact component={Clients} />
+                            <Route
+                              path="/clientes/adicionar"
+                              exact
+                              component={AddClient}
+                            />
+                            <Route
+                              path="/cobrancas"
+                              exact
+                              component={Charges}
+                            />
+                            <Route
+                              path="/cobrancas/adicionar"
+                              exact
+                              component={AddCharges}
+                            />
+                          </ProfileIcon>
+                        </Sidebar>
+                      </ProtectedRoutes>
+                    </Switch>
+                  </Router>
+                </ChargesArrayContext.Provider>
               </ClientDetailsContext.Provider>
             </ClientsArrayContext.Provider>
           </ResponseContext.Provider>

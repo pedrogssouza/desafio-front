@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useHistory } from "react-router";
 import { AuthContext } from "../contexts/auth";
+import { ChargesArrayContext } from "../contexts/chargesArray";
 import { ClientDetailsContext } from "../contexts/clientDetails";
 import { ClientsArrayContext } from "../contexts/clientsArray";
 import { EditProfileContext } from "../contexts/editProfile";
@@ -19,6 +20,7 @@ export default function useApi() {
   const { setResponse } = useContext(ResponseContext);
   const { setClientsDisplay } = useContext(ClientsArrayContext);
   const { clientDetails, setClientDetails } = useContext(ClientDetailsContext);
+  const { setChargesDisplay } = useContext(ChargesArrayContext);
   const history = useHistory();
 
   async function signInFunction(data) {
@@ -225,7 +227,59 @@ export default function useApi() {
     setLoading(false);
 
     if (response.ok) {
-      setClientDetails(responseData[0]);
+      await setClientDetails(responseData);
+      return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
+  async function getChargesFunction() {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await getProtectedRequest("/cobrancas", token);
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      setChargesDisplay(responseData);
+      return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
+  async function signUpChargeFunction(data, id) {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await postProtectedRequest(
+      `/cliente/cobranca/${id}`,
+      "POST",
+      data,
+      token
+    );
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      setResponse({
+        data: responseData,
+        type: "success",
+      });
       return;
     }
 
@@ -244,5 +298,7 @@ export default function useApi() {
     getClientsFunction,
     editClientFunction,
     getClientDetailsFunction,
+    getChargesFunction,
+    signUpChargeFunction,
   };
 }

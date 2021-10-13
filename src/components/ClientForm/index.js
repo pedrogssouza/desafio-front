@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { ClientDetailsContext } from "../../contexts/clientDetails";
 import { ResponseContext } from "../../contexts/response";
 import { maskCpf, testCpf } from "../../services/cpf";
 import getDataByCep from "../../services/viaCep";
@@ -9,6 +10,7 @@ import "./styles.css";
 
 export default function ClientForm(props) {
   const { setResponse } = useContext(ResponseContext);
+  const { clientDetails } = useContext(ClientDetailsContext);
   const { handleSubmit, register } = useForm();
   const [buttonOn, setButtonOn] = useState(false);
   const [inputName, setInputName] = useState("");
@@ -19,6 +21,19 @@ export default function ClientForm(props) {
   const [inputBairro, setInputBairro] = useState("");
   const [inputCity, setInputCity] = useState("");
   const [inputUf, setInputUf] = useState("");
+  const [inputComplement, setInputComplement] = useState("");
+
+  useEffect(() => {
+    setInputName(clientDetails.nome);
+    setInputEmail(clientDetails.email);
+    setInputCpf(clientDetails.cpf);
+    setInputCep(clientDetails.cep);
+    setInputStreet(clientDetails.logradouro);
+    setInputBairro(clientDetails.bairro);
+    setInputCity(clientDetails.cidade);
+    setInputUf(clientDetails.estado);
+    setInputComplement(clientDetails.complemento);
+  }, [clientDetails]);
 
   useEffect(() => {
     if (inputName && inputEmail && inputCpf) {
@@ -37,6 +52,9 @@ export default function ClientForm(props) {
   }
 
   useEffect(() => {
+    if (!inputCep) {
+      return;
+    }
     if (inputCep.indexOf("-") !== -1) {
       if (inputCep.length === 9) {
         loadDataByCep(inputCep);
@@ -128,14 +146,6 @@ export default function ClientForm(props) {
             />
           </div>
           <div className="clients-input-container flex-column">
-            <label className="clients-form-label" htmlFor="number">
-              Número
-            </label>
-            <input id="number" {...register("number")} type="number" />
-          </div>
-        </div>
-        <div className="flex-row gap">
-          <div className="clients-input-container flex-column">
             <label className="clients-form-label" htmlFor="logradouro">
               Logradouro
             </label>
@@ -146,6 +156,8 @@ export default function ClientForm(props) {
               onChange={(e) => setInputStreet(e.target.value)}
             />
           </div>
+        </div>
+        <div className="flex-row gap">
           <div className="clients-input-container flex-column">
             <label className="clients-form-label" htmlFor="bairro">
               Bairro
@@ -155,6 +167,17 @@ export default function ClientForm(props) {
               {...register("bairro")}
               value={inputBairro}
               onChange={(e) => setInputBairro(e.target.value)}
+            />
+          </div>
+          <div className="clients-input-container flex-column">
+            <label className="clients-form-label" htmlFor="complement">
+              Complemento
+            </label>
+            <input
+              id="complement"
+              {...register("complemento")}
+              value={inputComplement}
+              onChange={(e) => setInputComplement(e.target.value)}
             />
           </div>
         </div>

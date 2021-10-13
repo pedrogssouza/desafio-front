@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { Backdrop, makeStyles } from "@material-ui/core";
 import { useContext } from "react";
 import { ClientDetailsContext } from "../../contexts/clientDetails";
@@ -49,7 +50,7 @@ export default function ClientDetailing(props) {
                   <p>{clientDetails.email}</p>
                 </div>
                 <div className="flex-row">
-                  <img src={phone} alt="phone" className="mr-sm" />
+                  <img src={phone} alt="phone" className="" />
                   <p>{clientDetails.telefone}</p>
                 </div>
               </div>
@@ -62,7 +63,7 @@ export default function ClientDetailing(props) {
                   <h3>Estado</h3>
                   <p>{clientDetails.estado}</p>
                 </div>
-                <div className="mr-lg">
+                <div className="">
                   <h3>Cidade</h3>
                   <p>{clientDetails.cidade}</p>
                 </div>
@@ -72,7 +73,7 @@ export default function ClientDetailing(props) {
                   <h3>Logradouro</h3>
                   <p>{clientDetails.logradouro}</p>
                 </div>
-                <div className="mr-lg">
+                <div className="">
                   <h3>Bairro</h3>
                   <p>{clientDetails.bairro}</p>
                 </div>
@@ -83,8 +84,10 @@ export default function ClientDetailing(props) {
               </div>
             </div>
             <hr></hr>
-            <div className="client-charges-info">
-              {/* {clientDetails.array.map((charge) => {})} */}
+            <div className="client-charges-info ">
+              {clientDetails.cobrancas.map((charge) => (
+                <ClientCharge {...charge} />
+              ))}
             </div>
           </div>
         </div>
@@ -94,23 +97,40 @@ export default function ClientDetailing(props) {
 }
 
 function ClientCharge(props) {
+  function checkStatus(status) {
+    const now = new Date();
+    const expireDate = new Date(props.vencimento);
+
+    if (status) {
+      return "pago";
+    } else if (now.getTime() > expireDate.getTime()) {
+      return "vencido";
+    } else {
+      return "pendente";
+    }
+  }
+
   return (
-    <div className="flex-column">
-      <div className="flex-row mb-sm">
+    <div className="flex-column client-charge mb-lg">
+      <div className="flex-row mb-sm client-charge-header">
         <p>
-          <span className="client-charge-id">{props.id_cobranca}</span>
-          {props.descricao}
+          <span className="client-charge-id">#{props.id_cobranca}</span>
+          <span className="ml-sm">{props.descricao} </span>
         </p>
         <p className="client-charge-value">
-          {Number(props.valor).toLocaleString("pt-br", {
+          {Number(props.valor / 100).toLocaleString("pt-br", {
             style: "currency",
             currency: "BRL",
           })}
         </p>
       </div>
-      <div className="flex-row">
-        <p className="client-charge-date">{props.vencimento}</p>
-        <p className="client-charge-status"></p>
+      <div className="flex-row client-charge-footer">
+        <p className="client-charge-date">
+          {format(new Date(props.vencimento), "MM/dd/yyyy")}
+        </p>
+        <p className={`charge-status ${checkStatus(props.status)}`}>
+          {checkStatus(props.status)}
+        </p>
       </div>
     </div>
   );

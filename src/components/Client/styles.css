@@ -17,8 +17,6 @@
 }
 
 .client p {
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 17px;
   align-items: center;
@@ -26,7 +24,7 @@
 
 .client-status {
   justify-content: space-between;
-  font-weight: 600;
+  font-weight: bold;
   font-size: 16px;
   line-height: 15px;
   text-transform: uppercase;
