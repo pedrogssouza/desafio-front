@@ -25,14 +25,7 @@ export default function AddCharges() {
           onSubmit={handleSubmit((data) => {
             const { id, ...dataSubmit } = data;
 
-            const now = new Date();
-            const expireDate = new Date(dataSubmit.vencimento);
-            if (now.getTime() > expireDate.getTime()) {
-              alert("Não é possível cadastrar uma data anterior à atual");
-              return;
-            }
-
-            // signUpChargeFunction(dataSubmit, id);
+            signUpChargeFunction(dataSubmit, id);
           })}
         >
           <div>
