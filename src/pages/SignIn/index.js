@@ -39,6 +39,7 @@ function SignIn() {
               placeholder="exemplo@gmail.com"
               {...register("email", { required: true })}
               onChange={(e) => setInputEmail(e.target.value)}
+              className="mb-sm"
             />
           </div>
         </div>

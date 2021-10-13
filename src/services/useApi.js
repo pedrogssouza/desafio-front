@@ -227,7 +227,7 @@ export default function useApi() {
     setLoading(false);
 
     if (response.ok) {
-      setClientDetails(responseData[0]);
+      await setClientDetails(responseData);
       return;
     }
 
@@ -242,7 +242,7 @@ export default function useApi() {
 
     setLoading(true);
 
-    const response = await getProtectedRequest("/cliente/cobranca", token);
+    const response = await getProtectedRequest("/cobrancas", token);
 
     const responseData = await response.json();
 

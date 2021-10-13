@@ -4,7 +4,7 @@ import useApi from "../../services/useApi";
 import { useForm } from "react-hook-form";
 import LoadingComponent from "../../components/Loading";
 import ResponseComponent from "../../components/ResponseConfirmation";
-import {} from "react-bootstrap";
+import { isBefore } from "date-fns";
 import "./styles.css";
 
 export default function AddCharges() {
@@ -24,10 +24,15 @@ export default function AddCharges() {
           className="clients-form add-charges-form"
           onSubmit={handleSubmit((data) => {
             const { id, ...dataSubmit } = data;
-            dataSubmit.status === "Pendente"
-              ? (dataSubmit.status = false)
-              : (dataSubmit.status = true);
-            signUpChargeFunction(dataSubmit, id);
+
+            const now = new Date();
+            const expireDate = new Date(dataSubmit.vencimento);
+            if (now.getTime() > expireDate.getTime()) {
+              alert("Não é possível cadastrar uma data anterior à atual");
+              return;
+            }
+
+            // signUpChargeFunction(dataSubmit, id);
           })}
         >
           <div>
@@ -70,10 +75,10 @@ export default function AddCharges() {
             placeholder="Referente ao pagamento da compra online."
             required
           >
-            <option value={"Pendente"} className="select-items">
+            <option value={false} className="select-items">
               Pendente
             </option>
-            <option value={"Pago"} className="select-items">
+            <option value={true} className="select-items">
               Pago
             </option>
           </select>

@@ -31,11 +31,32 @@
 }
 
 .client-infos {
-  margin-right: auto;
+  width: 100%;
+}
+
+.client-charge {
+  background: #f9f9f9;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  height: 90px;
+  padding: 16px;
+  justify-content: space-between;
+}
+
+.client-charge-header {
+  justify-content: space-between;
+}
+.client-charge-footer {
+  justify-content: space-between;
 }
 
 .client-charges-info {
   margin-left: auto;
+  width: 100%;
+  padding: 0 40px 0 70px;
+  height: 300px;
+  overflow-y: scroll;
 }
 
 .client-charge-id {

@@ -1,12 +1,13 @@
 import "./styles.css";
 import { Backdrop, makeStyles } from "@material-ui/core";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import edit from "../../assets/edit-icon.svg";
 import mail from "../../assets/mail.svg";
 import phone from "../../assets/phone.svg";
 import ClientForm from "../ClientForm";
 import useApi from "../../services/useApi";
 import ClientDetailing from "../ClientDetails";
+import { ClientDetailsContext } from "../../contexts/clientDetails";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ClientComponent(props) {
   const [editClient, setEditClient] = useState(false);
   const [clientDetailing, setClientDetailing] = useState(false);
+  const { clientDetails } = useContext(ClientDetailsContext);
   const { getClientDetailsFunction } = useApi();
 
   return (
@@ -49,16 +51,22 @@ export default function ClientComponent(props) {
         </p>
       </div>
       <p className="flex-row">
-        {Number(props.valor_total_cobrancas_feitas).toLocaleString("pt-br", {
-          style: "currency",
-          currency: "BRL",
-        })}
+        {Number(props.valor_total_cobrancas_feitas / 100).toLocaleString(
+          "pt-br",
+          {
+            style: "currency",
+            currency: "BRL",
+          }
+        )}
       </p>
       <p className="flex-row">
-        {Number(props.valor_total_cobrancas_recebidas).toLocaleString("pt-br", {
-          style: "currency",
-          currency: "BRL",
-        })}
+        {Number(props.valor_total_cobrancas_recebidas / 100).toLocaleString(
+          "pt-br",
+          {
+            style: "currency",
+            currency: "BRL",
+          }
+        )}
       </p>
       <p
         className={
@@ -71,13 +79,18 @@ export default function ClientComponent(props) {
         <img
           className="mr-md edit-client"
           src={edit}
-          onClick={(e) => {
+          onClick={async (e) => {
             e.stopPropagation();
+            await getClientDetailsFunction(props.id);
             setEditClient(true);
           }}
         />
       </p>
-      <EditClient editClient={editClient} setEditClient={setEditClient} />
+      <EditClient
+        editClient={editClient}
+        setEditClient={setEditClient}
+        id={props.id}
+      />
       {clientDetailing ? (
         <ClientDetailing
           clientDetailing={clientDetailing}
@@ -93,13 +106,21 @@ export default function ClientComponent(props) {
 function EditClient(props) {
   const classes = useStyles();
   const { editClientFunction } = useApi();
+  const { setClientDetails } = useContext(ClientDetailsContext);
+
   return (
     <Backdrop className={classes.backdrop} open={props.editClient}>
-      <div className={classes.container}>
+      <div
+        className={classes.container}
+        onClick={async (e) => {
+          e.stopPropagation();
+        }}
+      >
         <ClientForm
           button={"Editar Cliente"}
           closeButton={(e) => {
             e.stopPropagation();
+            setClientDetails({});
             props.setEditClient(false);
           }}
           function={editClientFunction}
