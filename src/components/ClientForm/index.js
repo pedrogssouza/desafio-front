@@ -25,9 +25,12 @@ export default function ClientForm(props) {
   const [inputPhone, setInputPhone] = useState("");
 
   useEffect(() => {
+    if (!clientDetails.cpf) {
+      return;
+    }
     setInputName(clientDetails.nome);
     setInputEmail(clientDetails.email);
-    setInputCpf(clientDetails.cpf);
+    setInputCpf(maskCpf(clientDetails.cpf) || "");
     setInputCep(clientDetails.cep);
     setInputStreet(clientDetails.logradouro);
     setInputBairro(clientDetails.bairro);

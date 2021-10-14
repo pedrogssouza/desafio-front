@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { Backdrop, makeStyles } from "@material-ui/core";
 import { useContext } from "react";
 import { ClientDetailsContext } from "../../contexts/clientDetails";
+import { maskCpf, testCpf } from "../../services/cpf";
 import mail from "../../assets/mail.svg";
 import phone from "../../assets/phone.svg";
 import "./styles.css";
@@ -26,7 +27,13 @@ export default function ClientDetailing(props) {
   const classes = useStyles();
   const { clientDetails, setClientDetails } = useContext(ClientDetailsContext);
   return (
-    <Backdrop className={classes.backdrop} open={props.clientDetailing}>
+    <Backdrop
+      className={classes.backdrop}
+      open={props.clientDetailing}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <div className={classes.container}>
         <div className="client-detailing">
           <div className="client-detailing-header flex-row items-center mb-md">
@@ -41,7 +48,7 @@ export default function ClientDetailing(props) {
               X
             </p>
           </div>
-          <p className="mb-lg">{clientDetails.cpf}</p>
+          <p className="mb-lg">{maskCpf(clientDetails.cpf)}</p>
           <div className="client-detailing-info flex-row">
             <div className="client-infos">
               <div className="email-phone flex-row mb-md">
@@ -50,7 +57,7 @@ export default function ClientDetailing(props) {
                   <p>{clientDetails.email}</p>
                 </div>
                 <div className="flex-row">
-                  <img src={phone} alt="phone" className="" />
+                  <img src={phone} alt="phone" className="mr-sm" />
                   <p>{clientDetails.telefone}</p>
                 </div>
               </div>

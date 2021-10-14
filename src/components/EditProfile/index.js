@@ -3,7 +3,9 @@ import { Backdrop, makeStyles } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { EditProfileContext } from "../../contexts/editProfile.js";
+import { ResponseContext } from "../../contexts/response";
 import useApi from "../../services/useApi.js";
+import { maskCpf, testCpf } from "../../services/cpf";
 import PasswordComponent from "../PasswordComponent/index.js";
 import LoadingComponent from "../Loading";
 import ResponseComponent from "../ResponseConfirmation";
@@ -22,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function EditProfileComponent() {
   const classes = useStyles();
+  const { setResponse } = useContext(ResponseContext);
   const { editProfile, setEditProfile } = useContext(EditProfileContext);
   const { handleSubmit, register } = useForm();
   const { editProfileFunction, getProfileFunction } = useApi();
@@ -43,7 +46,7 @@ export function EditProfileComponent() {
       setInputName(profile.nome);
       setInputEmail(profile.email);
       setInputPhone(profile.telefone);
-      setInputCpf(profile.cpf);
+      setInputCpf(maskCpf(profile.cpf) || "");
     }
     getInitialProfile();
   }, []);
@@ -60,7 +63,17 @@ export function EditProfileComponent() {
     <Backdrop className={classes.backdrop} open={editProfile}>
       <div className="form-sign">
         <form
-          onSubmit={handleSubmit(editProfileFunction)}
+          onSubmit={handleSubmit((data) => {
+            if (!testCpf(inputCpf.replaceAll(".", "").replace("-", ""))) {
+              setResponse({
+                data: "CPF inválido",
+                type: "error",
+              });
+              return;
+            }
+
+            editProfileFunction(data);
+          })}
           className="form-container flex-column items-center"
         >
           <p onClick={() => setEditProfile(false)} className="close-form">
@@ -122,10 +135,11 @@ export function EditProfileComponent() {
               </label>
               <input
                 id="cpf"
+                maxLength="14"
                 placeholder="222.222.222-22"
                 {...register("cpf")}
                 value={inputCpf}
-                onChange={(e) => setInputCpf(e.target.value)}
+                onChange={(e) => setInputCpf(maskCpf(e.target.value))}
               />
             </div>
           </div>

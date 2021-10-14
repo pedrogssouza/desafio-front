@@ -109,13 +109,14 @@ function EditClient(props) {
   const { setClientDetails } = useContext(ClientDetailsContext);
 
   return (
-    <Backdrop className={classes.backdrop} open={props.editClient}>
-      <div
-        className={classes.container}
-        onClick={async (e) => {
-          e.stopPropagation();
-        }}
-      >
+    <Backdrop
+      className={classes.backdrop}
+      open={props.editClient}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      <div className={classes.container}>
         <ClientForm
           button={"Editar Cliente"}
           closeButton={(e) => {

@@ -30,7 +30,7 @@ export default function AddCharges() {
         >
           <div>
             <div className="mb-sm ml-sm">
-              <label htmlFor="id">Dropdown</label>
+              <label htmlFor="id">Cliente</label>
             </div>
             {clientsDisplay.length !== 0 ? (
               <select
