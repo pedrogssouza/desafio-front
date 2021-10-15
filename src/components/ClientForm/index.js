@@ -49,15 +49,24 @@ export default function ClientForm(props) {
   }, [inputEmail, inputName, inputCpf]);
 
   async function loadDataByCep(cep) {
-    const data = await getDataByCep(cep);
-    setInputCity(data.localidade);
-    setInputStreet(data.logradouro);
-    setInputUf(data.uf);
-    setInputBairro(data.bairro);
+    if (cep) {
+      const data = await getDataByCep(cep);
+      setInputCity(data.localidade);
+      setInputStreet(data.logradouro);
+      setInputUf(data.uf);
+      setInputBairro(data.bairro);
+      return;
+    }
+
+    setInputCity("");
+    setInputStreet("");
+    setInputUf("");
+    setInputBairro("");
   }
 
   useEffect(() => {
     if (!inputCep) {
+      loadDataByCep("");
       return;
     }
     if (inputCep.indexOf("-") !== -1) {
@@ -85,6 +94,17 @@ export default function ClientForm(props) {
           }
 
           props.function(data);
+
+          setInputName("");
+          setInputEmail("");
+          setInputCpf("");
+          setInputCep("");
+          setInputStreet("");
+          setInputBairro("");
+          setInputCity("");
+          setInputUf("");
+          setInputComplement("");
+          setInputPhone("");
         })}
       >
         <div className="clients-input-container flex-column">
@@ -146,10 +166,13 @@ export default function ClientForm(props) {
             </label>
             <input
               id="cep"
+              maxLength="9"
               {...register("cep")}
               placeholder="20100-300"
               value={inputCep}
-              onChange={(e) => setInputCep(e.target.value)}
+              onChange={(e) => {
+                setInputCep(e.target.value);
+              }}
             />
           </div>
           <div className="clients-input-container flex-column">
