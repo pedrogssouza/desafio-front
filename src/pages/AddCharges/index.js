@@ -2,15 +2,29 @@ import { useContext, useEffect, useState } from "react";
 import { ClientsArrayContext } from "../../contexts/clientsArray";
 import useApi from "../../services/useApi";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
 import LoadingComponent from "../../components/Loading";
 import ResponseComponent from "../../components/ResponseConfirmation";
-import { isBefore } from "date-fns";
 import "./styles.css";
 
 export default function AddCharges() {
+  const history = useHistory();
   const { clientsDisplay } = useContext(ClientsArrayContext);
   const { register, handleSubmit } = useForm();
   const { getClientsFunction, signUpChargeFunction } = useApi();
+
+  const [buttonOn, setButtonOn] = useState(false);
+  const [inputDescription, setInputDescription] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [inputDate, setInputDate] = useState();
+
+  useEffect(() => {
+    if (inputDescription && inputValue && inputDate) {
+      setButtonOn(true);
+    } else {
+      setButtonOn(false);
+    }
+  }, [inputDescription, inputValue, inputDate]);
 
   useEffect(() => {
     getClientsFunction();
@@ -58,6 +72,8 @@ export default function AddCharges() {
             placeholder="Referente ao pagamento da compra online."
             {...register("descricao")}
             required
+            value={inputDescription}
+            onChange={(e) => setInputDescription(e.target.value)}
           />
           <div className="mb-sm ml-sm">
             <label htmlFor="status">Status</label>
@@ -66,6 +82,7 @@ export default function AddCharges() {
             {...register("status")}
             id="status"
             placeholder="Referente ao pagamento da compra online."
+            defaultValue={false}
             required
           >
             <option value={false} className="select-items">
@@ -86,6 +103,8 @@ export default function AddCharges() {
                 {...register("valor")}
                 required
                 type="number"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
               />
             </div>
             <div className="vencimento">
@@ -98,12 +117,22 @@ export default function AddCharges() {
                 {...register("vencimento")}
                 type="date"
                 required
+                value={inputDate}
+                onChange={(e) => setInputDate(e.target.value)}
               />
             </div>
           </div>
           <div className="flex-row">
-            <button className="btn-white cancelar">Cancelar</button>
-            <button className="btn-pink on" type="submit">
+            <button
+              className="btn-white cancelar"
+              onClick={() => history.push("/cobrancas")}
+            >
+              Cancelar
+            </button>
+            <button
+              className={buttonOn ? `btn-pink on ` : `btn-pink off`}
+              type="submit"
+            >
               Criar cobrança
             </button>
           </div>
