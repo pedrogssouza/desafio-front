@@ -32,3 +32,41 @@
 .vencido {
   color: #ff4d4d;
 }
+.span-delete {
+  max-width: 50%;
+  max-height: 28px;
+}
+.delete-charge {
+  color: #868686;
+  text-decoration: underline;
+}
+
+.delete-charge-div {
+  width: max-content;
+  height: min-content;
+  background: #f8f8f8;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  color: black;
+  padding: 8px 10px;
+}
+
+.delete-charge-button {
+  width: 40px;
+  height: 16px;
+  border-radius: 6px;
+  color: white;
+  outline: none;
+  border: 0;
+  line-height: 11px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.blue-delete {
+  background-color: #3a9ff1;
+}
+
+.red-delete {
+  background-color: #ff576b;
+}

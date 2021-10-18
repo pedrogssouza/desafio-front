@@ -30,9 +30,9 @@ export default function Clients(props) {
         <p>Cobranças Recebidas</p>
         <p>Status</p>
       </div>
-      {clientsDisplay.length !== 0
-        ? clientsDisplay.map((client) => <ClientComponent {...client} />)
-        : ""}
+      {clientsDisplay.map((client) => (
+        <ClientComponent {...client} />
+      ))}
       <LoadingComponent />
       <ResponseComponent />
     </div>

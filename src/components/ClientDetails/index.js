@@ -133,7 +133,7 @@ function ClientCharge(props) {
       </div>
       <div className="flex-row client-charge-footer">
         <p className="client-charge-date">
-          {format(new Date(props.vencimento), "MM/dd/yyyy")}
+          {new Date(props.vencimento).toLocaleDateString().substr(0, 10)}
         </p>
         <p className={`charge-status ${checkStatus(props.status)}`}>
           {checkStatus(props.status)}

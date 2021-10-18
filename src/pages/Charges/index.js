@@ -13,7 +13,6 @@ export default function Charges(props) {
   useEffect(() => {
     getChargesFunction();
   }, []);
-  console.log(chargesDisplay);
   return (
     <div className="charges-content">
       <div className="charges-display-details">

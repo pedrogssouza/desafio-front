@@ -118,10 +118,6 @@ export default function useApi() {
     setLoading(false);
 
     if (response.ok) {
-      // setResponse({
-      //   data: responseData,
-      //   type: "success",
-      // });
       return responseData;
     }
 
@@ -259,7 +255,7 @@ export default function useApi() {
     });
   }
 
-  async function signUpChargeFunction(data, id) {
+  async function addChargeFunction(data, id) {
     setResponse({});
 
     setLoading(true);
@@ -267,6 +263,36 @@ export default function useApi() {
     const response = await postProtectedRequest(
       `/cliente/cobranca/${id}`,
       "POST",
+      data,
+      token
+    );
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      setResponse({
+        data: responseData,
+        type: "success",
+      });
+      return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
+  async function editChargeFunction(data, id_cobranca) {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await postProtectedRequest(
+      `/cobrancas/${id_cobranca}`,
+      "PUT",
       data,
       token
     );
@@ -299,6 +325,7 @@ export default function useApi() {
     editClientFunction,
     getClientDetailsFunction,
     getChargesFunction,
-    signUpChargeFunction,
+    addChargeFunction,
+    editChargeFunction,
   };
 }

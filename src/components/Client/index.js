@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ClientComponent(props) {
   const [editClient, setEditClient] = useState(false);
   const [clientDetailing, setClientDetailing] = useState(false);
-  const { clientDetails } = useContext(ClientDetailsContext);
   const { getClientDetailsFunction } = useApi();
 
   return (

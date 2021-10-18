@@ -11,7 +11,7 @@ export default function AddCharges() {
   const history = useHistory();
   const { clientsDisplay } = useContext(ClientsArrayContext);
   const { register, handleSubmit } = useForm();
-  const { getClientsFunction, signUpChargeFunction } = useApi();
+  const { getClientsFunction, addChargeFunction } = useApi();
 
   const [buttonOn, setButtonOn] = useState(false);
   const [inputDescription, setInputDescription] = useState("");
@@ -39,7 +39,7 @@ export default function AddCharges() {
           onSubmit={handleSubmit((data) => {
             const { id, ...dataSubmit } = data;
 
-            signUpChargeFunction(dataSubmit, id);
+            addChargeFunction(dataSubmit, id);
           })}
         >
           <div>
@@ -125,7 +125,10 @@ export default function AddCharges() {
           <div className="flex-row">
             <button
               className="btn-white cancelar"
-              onClick={() => history.push("/cobrancas")}
+              onClick={(e) => {
+                e.stopPropagation();
+                history.push("/cobrancas");
+              }}
             >
               Cancelar
             </button>

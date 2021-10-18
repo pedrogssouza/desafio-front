@@ -1,4 +1,5 @@
 import "./styles/global.css";
+import { useContext, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,19 +11,19 @@ import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import AddClient from "./pages/AddClients";
+import Clients from "./pages/Clients";
+import Charges from "./pages/Charges";
+import AddCharges from "./pages/AddCharges";
+import Rundown from "./pages/Rundown";
 import Sidebar from "./components/Sidebar";
 import ProfileIcon from "./components/ProfileIcon";
-import { useContext, useState } from "react";
 import { AuthContext } from "./contexts/auth";
 import { EditProfileContext } from "./contexts/editProfile";
 import { LoadingContext } from "./contexts/loadingContext";
 import { ResponseContext } from "./contexts/response";
-import Clients from "./pages/Clients";
 import { ClientsArrayContext } from "./contexts/clientsArray";
 import { ClientDetailsContext } from "./contexts/clientDetails";
-import Charges from "./pages/Charges";
 import { ChargesArrayContext } from "./contexts/chargesArray";
-import AddCharges from "./pages/AddCharges";
 
 function ProtectedRoutes(props) {
   const { token } = useContext(AuthContext);
@@ -43,6 +44,7 @@ export default function Routes() {
   const [clientsDisplay, setClientsDisplay] = useState([]);
   const [clientDetails, setClientDetails] = useState({});
   const [chargesDisplay, setChargesDisplay] = useState([]);
+
   return (
     <AuthContext.Provider value={{ token, setToken }}>
       <EditProfileContext.Provider value={{ editProfile, setEditProfile }}>
@@ -65,6 +67,11 @@ export default function Routes() {
                         <Sidebar>
                           <ProfileIcon>
                             <Route path="/" exact component={Home} />
+                            <Route
+                              path="/relatorio"
+                              exact
+                              component={Rundown}
+                            />
                             <Route path="/clientes" exact component={Clients} />
                             <Route
                               path="/clientes/adicionar"
