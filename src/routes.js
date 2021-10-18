@@ -78,11 +78,19 @@ export default function Routes() {
                               exact
                               component={AddClient}
                             />
-                            <Route
-                              path="/cobrancas"
-                              exact
-                              component={Charges}
-                            />
+                            <Switch>
+                              <Route
+                                path="/cobrancas"
+                                exact
+                                component={Charges}
+                              />
+
+                              <Redirect
+                                exact
+                                from="/cobrancas/reload"
+                                to="/cobrancas"
+                              />
+                            </Switch>
                             <Route
                               path="/cobrancas/adicionar"
                               exact

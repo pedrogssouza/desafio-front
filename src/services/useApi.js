@@ -11,6 +11,7 @@ import {
   postRequest,
   postProtectedRequest,
   getProtectedRequest,
+  deleteProtectedRequest,
 } from "./requests";
 
 export default function useApi() {
@@ -315,6 +316,34 @@ export default function useApi() {
     });
   }
 
+  async function deleteChargeFunction(id_cobranca) {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await deleteProtectedRequest(
+      `/cobrancas/${id_cobranca}`,
+      token
+    );
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      setResponse({
+        data: responseData,
+        type: "success",
+      });
+      return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
   return {
     signInFunction,
     signUpFunction,
@@ -327,5 +356,6 @@ export default function useApi() {
     getChargesFunction,
     addChargeFunction,
     editChargeFunction,
+    deleteChargeFunction,
   };
 }

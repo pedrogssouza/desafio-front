@@ -42,3 +42,17 @@ export async function getProtectedRequest(endPoint, token) {
 
   return response;
 }
+
+export async function deleteProtectedRequest(endPoint, token) {
+  const response = await fetch(
+    "https://sistema-cobranca-localhost071.herokuapp.com" + endPoint,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response;
+}

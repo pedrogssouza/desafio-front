@@ -7,6 +7,7 @@ import { ClientsArrayContext } from "../../contexts/clientsArray";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import trash from "../../assets/trash.svg";
+import { ChargesArrayContext } from "../../contexts/chargesArray";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -79,23 +80,22 @@ export default function ChargeComponent(props) {
 
 function EditCharge(props) {
   const classes = useStyles();
+  const history = useHistory();
   const { clientsDisplay } = useContext(ClientsArrayContext);
+  const { chargesDisplay } = useContext(ChargesArrayContext);
   const [deleteCharge, setDeleteCharge] = useState(false);
   const [buttonOn, setButtonOn] = useState(false);
+
   const [inputDescription, setInputDescription] = useState(
     props.descricao || ""
   );
-  const [inputValue, setInputValue] = useState(
-    Number(props.valor / 100).toLocaleString("pt-br", {
-      style: "currency",
-      currency: "BRL",
-    }) || ""
-  );
+  const [inputValue, setInputValue] = useState(props.valor / 100 || "");
   const [inputDate, setInputDate] = useState(
     new Date(props.vencimento).toISOString().substr(0, 10)
   );
 
-  const { editChargeFunction, getClientsFunction } = useApi();
+  const { editChargeFunction, getClientsFunction, deleteChargeFunction } =
+    useApi();
   const { register, handleSubmit } = useForm();
 
   useEffect(() => {
@@ -110,7 +110,12 @@ function EditCharge(props) {
     getClientsFunction();
   }, []);
 
-  console.log(props);
+  useEffect(() => {
+    setInputDescription(props.descricao);
+    setInputValue(props.valor);
+    setInputDate(new Date(props.vencimento).toISOString().substr(0, 10));
+  }, [chargesDisplay]);
+
   return (
     <Backdrop
       className={classes.backdrop}
@@ -123,8 +128,13 @@ function EditCharge(props) {
         <form
           className="clients-form add-charges-form"
           onSubmit={handleSubmit((data) => {
-            console.log(data);
-            // editChargeFunction(data, props.id_cobranca);
+            editChargeFunction(data, props.id_cobranca);
+            props.setEditCharge(false);
+            let currentPath = window.location.pathname;
+            history.replace(`${currentPath}/reload`);
+            setTimeout(() => {
+              history.replace(currentPath);
+            }, 0);
           })}
         >
           <div>
@@ -186,8 +196,9 @@ function EditCharge(props) {
               </div>
               <input
                 id="valor"
-                placeholder="32,50"
+                placeholder="32.50"
                 {...register("valor")}
+                type="number"
                 required
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
@@ -220,14 +231,30 @@ function EditCharge(props) {
             </div>
             {deleteCharge ? (
               <div className="flex-column delete-charge-div ml-md items-center content-center">
-                <p className="mt-sm">Apagar item?</p>
+                <p className="mt-sm">Apagar cobrança?</p>
                 <div className="flex-row mb-sm mt-sm">
-                  <button className="delete-charge-button blue-delete">
+                  <button
+                    className="delete-charge-button blue-delete"
+                    type="reset"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteChargeFunction(props.id_cobranca);
+                      let currentPath = window.location.pathname;
+                      history.replace(`${currentPath}/reload`);
+                      setTimeout(() => {
+                        history.replace(currentPath);
+                      }, 0);
+                      props.setEditCharge(false);
+                    }}
+                  >
                     Sim
                   </button>
                   <button
                     className="delete-charge-button red-delete ml-sm"
-                    onClick={() => setDeleteCharge(false)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDeleteCharge(false);
+                    }}
                   >
                     Não
                   </button>
@@ -240,9 +267,11 @@ function EditCharge(props) {
           <div className="flex-row mt-md">
             <button
               className="btn-white cancelar"
+              type="reset"
               onClick={(e) => {
                 e.stopPropagation();
                 props.setEditCharge(false);
+                setDeleteCharge(false);
               }}
             >
               Cancelar

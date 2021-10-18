@@ -13,6 +13,7 @@ export default function Charges(props) {
   useEffect(() => {
     getChargesFunction();
   }, []);
+
   return (
     <div className="charges-content">
       <div className="charges-display-details">
@@ -24,7 +25,9 @@ export default function Charges(props) {
         <p>Vencimento</p>
       </div>
       {chargesDisplay.length !== 0
-        ? chargesDisplay.map((charge) => <ChargeComponent {...charge} />)
+        ? chargesDisplay.map((charge) => (
+            <ChargeComponent {...charge} key={charge.id_cobranca} />
+          ))
         : ``}
       <LoadingComponent />
       <ResponseComponent />
