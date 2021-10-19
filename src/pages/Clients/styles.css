@@ -17,3 +17,7 @@
   grid-template-rows: repeat(auto-fill, 1fr);
   grid-template-columns: repeat(4, 1fr);
 }
+
+.clients-header {
+  justify-content: space-between;
+}

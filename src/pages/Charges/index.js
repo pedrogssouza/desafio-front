@@ -5,6 +5,7 @@ import ChargeComponent from "../../components/Charge";
 import { ChargesArrayContext } from "../../contexts/chargesArray";
 import useApi from "../../services/useApi";
 import "./styles.css";
+import SearchComponent from "../../components/SearchComponent";
 
 export default function Charges(props) {
   const { chargesDisplay } = useContext(ChargesArrayContext);
@@ -16,6 +17,9 @@ export default function Charges(props) {
 
   return (
     <div className="charges-content">
+      <div className="">
+        <SearchComponent type="charges" />
+      </div>
       <div className="charges-display-details">
         <p>ID</p>
         <p>Cliente</p>

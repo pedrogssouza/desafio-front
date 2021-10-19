@@ -179,6 +179,26 @@ export default function useApi() {
       type: "error",
     });
   }
+  async function getFilteredClientsFunction() {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await getProtectedRequest("/cliente", token);
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      return responseData;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
 
   async function editClientFunction(data) {
     setResponse({});
@@ -248,6 +268,27 @@ export default function useApi() {
     if (response.ok) {
       setChargesDisplay(responseData);
       return;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
+  async function getFilteredChargesFunction() {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await getProtectedRequest("/cobrancas", token);
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      return responseData;
     }
 
     setResponse({
@@ -375,6 +416,7 @@ export default function useApi() {
     getProfileFunction,
     addClientFunction,
     getClientsFunction,
+    getFilteredClientsFunction,
     editClientFunction,
     getClientDetailsFunction,
     getChargesFunction,
@@ -382,5 +424,6 @@ export default function useApi() {
     editChargeFunction,
     deleteChargeFunction,
     getRundownFunction,
+    getFilteredChargesFunction,
   };
 }
