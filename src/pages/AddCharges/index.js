@@ -61,7 +61,9 @@ export default function AddCharges() {
                 ))}
               </select>
             ) : (
-              ""
+              <select>
+                <option></option>
+              </select>
             )}
           </div>
           <div className="mb-sm ml-sm mt-lg">
