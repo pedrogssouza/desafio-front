@@ -1,0 +1,37 @@
+.set-rundown > * {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 29px;
+  text-transform: uppercase;
+  color: #000000;
+  cursor: pointer;
+}
+
+.set-rundown > p {
+  cursor: pointer;
+}
+
+.active {
+  color: #da0175;
+}
+
+.rundown-dropdown {
+  width: min-content;
+  height: min-content;
+  background: #f8f8f8;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: capitalize;
+  color: black;
+  gap: 8px;
+  z-index: 999;
+  padding: 10px 6px;
+}
+
+.rundown-dropdown > * {
+  cursor: pointer;
+}

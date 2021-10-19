@@ -24,6 +24,8 @@ import { ResponseContext } from "./contexts/response";
 import { ClientsArrayContext } from "./contexts/clientsArray";
 import { ClientDetailsContext } from "./contexts/clientDetails";
 import { ChargesArrayContext } from "./contexts/chargesArray";
+import { RundownTypeContext } from "./contexts/rundownType";
+import { RundownDetailTypeContext } from "./contexts/rundownDetailType";
 
 function ProtectedRoutes(props) {
   const { token } = useContext(AuthContext);
@@ -44,6 +46,8 @@ export default function Routes() {
   const [clientsDisplay, setClientsDisplay] = useState([]);
   const [clientDetails, setClientDetails] = useState({});
   const [chargesDisplay, setChargesDisplay] = useState([]);
+  const [rundownType, setRundownType] = useState("clients");
+  const [rundownDetailType, setRundownDetailType] = useState("inadimplentes");
 
   return (
     <AuthContext.Provider value={{ token, setToken }}>
@@ -59,48 +63,60 @@ export default function Routes() {
                 <ChargesArrayContext.Provider
                   value={{ chargesDisplay, setChargesDisplay }}
                 >
-                  <Router>
-                    <Switch>
-                      <Route path="/login" component={SignIn} />
-                      <Route path="/cadastro" component={SignUp} />
-                      <ProtectedRoutes>
-                        <Sidebar>
-                          <ProfileIcon>
-                            <Route path="/" exact component={Home} />
-                            <Route
-                              path="/relatorio"
-                              exact
-                              component={Rundown}
-                            />
-                            <Route path="/clientes" exact component={Clients} />
-                            <Route
-                              path="/clientes/adicionar"
-                              exact
-                              component={AddClient}
-                            />
-                            <Switch>
-                              <Route
-                                path="/cobrancas"
-                                exact
-                                component={Charges}
-                              />
+                  <RundownTypeContext.Provider
+                    value={{ rundownType, setRundownType }}
+                  >
+                    <RundownDetailTypeContext.Provider
+                      value={{ rundownDetailType, setRundownDetailType }}
+                    >
+                      <Router>
+                        <Switch>
+                          <Route path="/login" component={SignIn} />
+                          <Route path="/cadastro" component={SignUp} />
+                          <ProtectedRoutes>
+                            <Sidebar>
+                              <ProfileIcon>
+                                <Route path="/" exact component={Home} />
+                                <Route
+                                  path="/relatorio"
+                                  exact
+                                  component={Rundown}
+                                />
+                                <Route
+                                  path="/clientes"
+                                  exact
+                                  component={Clients}
+                                />
+                                <Route
+                                  path="/clientes/adicionar"
+                                  exact
+                                  component={AddClient}
+                                />
+                                <Switch>
+                                  <Route
+                                    path="/cobrancas"
+                                    exact
+                                    component={Charges}
+                                  />
 
-                              <Redirect
-                                exact
-                                from="/cobrancas/reload"
-                                to="/cobrancas"
-                              />
-                            </Switch>
-                            <Route
-                              path="/cobrancas/adicionar"
-                              exact
-                              component={AddCharges}
-                            />
-                          </ProfileIcon>
-                        </Sidebar>
-                      </ProtectedRoutes>
-                    </Switch>
-                  </Router>
+                                  <Redirect
+                                    exact
+                                    from="/cobrancas/reload"
+                                    to="/cobrancas"
+                                  />
+                                </Switch>
+                                <Route
+                                  path="/cobrancas/adicionar"
+                                  exact
+                                  component={AddCharges}
+                                />
+                              </ProfileIcon>
+                            </Sidebar>
+                          </ProtectedRoutes>
+                        </Switch>
+                      </Router>
+                    </RundownDetailTypeContext.Provider>
+                  </RundownTypeContext.Provider>
                 </ChargesArrayContext.Provider>
               </ClientDetailsContext.Provider>
             </ClientsArrayContext.Provider>

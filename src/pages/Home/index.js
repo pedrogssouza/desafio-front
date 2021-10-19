@@ -17,13 +17,13 @@ export default function Home() {
   async function getRundowns() {
     let promiseFinish = await getRundownFunction("status");
     setClientsOk(promiseFinish);
-    promiseFinish = await getRundownFunction("status?inadimplente=false");
+    promiseFinish = await getRundownFunction("status?inadimplente=true");
     setClientsNotOk(promiseFinish);
     promiseFinish = await getRundownFunction("pagas");
     setChargesPaid(promiseFinish);
-    promiseFinish = await getRundownFunction("vencimentos");
+    promiseFinish = await getRundownFunction("previstas");
     setChargesPending(promiseFinish);
-    promiseFinish = await getRundownFunction("vencimentos?vencida=true");
+    promiseFinish = await getRundownFunction("vencidas");
     setChargesExpired(promiseFinish);
   }
 
