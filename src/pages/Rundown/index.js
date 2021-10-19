@@ -32,9 +32,6 @@ export default function Rundown() {
     getChargesFunction();
   }, []);
 
-  console.log(clientsDisplay);
-  console.log(chargesDisplay);
-
   if (rundownType === "clients") {
     return (
       <div className="clients-content">
@@ -162,11 +159,11 @@ export default function Rundown() {
                   setRundownDetailTypeDropdown(!rundownDetailTypeDropdown)
                 }
               >
-                {rundownDetailType === "pagas"
-                  ? "Pagas"
+                {rundownDetailType === "vencidas"
+                  ? "Vencidas"
                   : rundownDetailType === "pendentes"
                   ? "Pendentes"
-                  : "Vencidas"}
+                  : "Pagas"}
               </p>
               {rundownDetailTypeDropdown ? (
                 <div className="rundown-dropdown flex-column content-center items-center ">

@@ -58,7 +58,7 @@ export default function Home() {
         },
         {
           color: "blue",
-          type: "Previstas",
+          type: "Pendentes",
           count: chargesPending.length || 0,
         },
         {
