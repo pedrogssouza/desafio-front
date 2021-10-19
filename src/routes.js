@@ -47,7 +47,7 @@ export default function Routes() {
   const [clientDetails, setClientDetails] = useState({});
   const [chargesDisplay, setChargesDisplay] = useState([]);
   const [rundownType, setRundownType] = useState("clients");
-  const [rundownDetailType, setRundownDetailType] = useState("inadimplentes");
+  const [rundownDetailType, setRundownDetailType] = useState("em dia");
 
   return (
     <AuthContext.Provider value={{ token, setToken }}>

@@ -35,3 +35,7 @@
 .rundown-dropdown > * {
   cursor: pointer;
 }
+
+.charges-search-rundow {
+  justify-content: space-between;
+}

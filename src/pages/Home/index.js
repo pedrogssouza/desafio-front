@@ -14,20 +14,19 @@ export default function Home() {
   const [chargesPending, setChargesPending] = useState([]);
   const [chargesExpired, setChargesExpired] = useState([]);
 
-  async function getRundowns() {
-    let promiseFinish = await getRundownFunction("status");
-    setClientsOk(promiseFinish);
-    promiseFinish = await getRundownFunction("status?inadimplente=true");
-    setClientsNotOk(promiseFinish);
-    promiseFinish = await getRundownFunction("pagas");
-    setChargesPaid(promiseFinish);
-    promiseFinish = await getRundownFunction("previstas");
-    setChargesPending(promiseFinish);
-    promiseFinish = await getRundownFunction("vencidas");
-    setChargesExpired(promiseFinish);
-  }
-
   useEffect(() => {
+    async function getRundowns() {
+      let promiseFinish = await getRundownFunction("status");
+      setClientsOk(promiseFinish);
+      promiseFinish = await getRundownFunction("status?inadimplente=true");
+      setClientsNotOk(promiseFinish);
+      promiseFinish = await getRundownFunction("pagas");
+      setChargesPaid(promiseFinish);
+      promiseFinish = await getRundownFunction("previstas");
+      setChargesPending(promiseFinish);
+      promiseFinish = await getRundownFunction("vencidas");
+      setChargesExpired(promiseFinish);
+    }
     getRundowns();
   }, []);
 

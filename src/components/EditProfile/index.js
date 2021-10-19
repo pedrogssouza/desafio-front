@@ -46,6 +46,9 @@ export function EditProfileComponent() {
       setInputName(profile.nome);
       setInputEmail(profile.email);
       setInputPhone(profile.telefone);
+      if (!profile.cpf) {
+        return;
+      }
       setInputCpf(maskCpf(profile.cpf) || "");
     }
     getInitialProfile();

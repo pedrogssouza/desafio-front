@@ -1,3 +1,4 @@
+import { ca } from "date-fns/locale";
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import ChargeComponent from "../../components/Charge";
@@ -31,6 +32,9 @@ export default function Rundown() {
     getChargesFunction();
   }, []);
 
+  console.log(clientsDisplay);
+  console.log(chargesDisplay);
+
   if (rundownType === "clients") {
     return (
       <div className="clients-content">
@@ -45,6 +49,7 @@ export default function Rundown() {
                   <p
                     onClick={() => {
                       setRundownType("clients");
+                      setRundownTypeDropdown(false);
                     }}
                     className="active"
                   >
@@ -53,6 +58,7 @@ export default function Rundown() {
                   <p
                     onClick={() => {
                       setRundownType("charges");
+                      setRundownTypeDropdown(false);
                     }}
                   >
                     Cobranças
@@ -84,11 +90,11 @@ export default function Rundown() {
                   </p>
                   <p
                     onClick={() => {
-                      setRundownDetailType("inadimplentes");
+                      setRundownDetailType("inadimplente");
                       setRundownDetailTypeDropdown(false);
                     }}
                     className={
-                      rundownDetailType === "inadimplentes" ? "active" : ""
+                      rundownDetailType === "inadimplente" ? "active" : ""
                     }
                   >
                     Inadimplentes
@@ -107,9 +113,11 @@ export default function Rundown() {
           <p>Cobranças Recebidas</p>
           <p>Status</p>
         </div>
-        {clientsDisplay.map((client) => (
-          <ClientComponent {...client} />
-        ))}
+        {clientsDisplay
+          .filter((client) => client.status === rundownDetailType)
+          .map((client) => (
+            <ClientComponent {...client} />
+          ))}
         <LoadingComponent />
         <ResponseComponent />
       </div>
@@ -117,7 +125,86 @@ export default function Rundown() {
   } else if (rundownType === "charges") {
     return (
       <div className="charges-content">
-        <div className="flex-row charges-search">
+        <div className="flex-row charges-search-rundow">
+          <div className="flex-row set-rundown">
+            <div>
+              <p onClick={() => setRundownTypeDropdown(!rundownTypeDropdown)}>
+                Cobranças
+              </p>
+              {rundownTypeDropdown ? (
+                <div className="rundown-dropdown flex-column content-center items-center ">
+                  <p
+                    onClick={() => {
+                      setRundownType("clients");
+                      setRundownTypeDropdown(false);
+                    }}
+                  >
+                    Clientes
+                  </p>
+                  <p
+                    onClick={() => {
+                      setRundownType("charges");
+                      setRundownTypeDropdown(false);
+                    }}
+                    className="active"
+                  >
+                    Cobranças
+                  </p>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+            <span className="ml-md mr-md active">{">"}</span>
+            <div>
+              <p
+                onClick={() =>
+                  setRundownDetailTypeDropdown(!rundownDetailTypeDropdown)
+                }
+              >
+                {rundownDetailType === "pagas"
+                  ? "Pagas"
+                  : rundownDetailType === "pendentes"
+                  ? "Pendentes"
+                  : "Vencidas"}
+              </p>
+              {rundownDetailTypeDropdown ? (
+                <div className="rundown-dropdown flex-column content-center items-center ">
+                  <p
+                    onClick={() => {
+                      setRundownDetailType("pagas");
+                      setRundownDetailTypeDropdown(false);
+                    }}
+                    className={rundownDetailType === "pagas" ? "active" : ""}
+                  >
+                    Pagas
+                  </p>
+                  <p
+                    onClick={() => {
+                      setRundownDetailType("pendentes");
+                      setRundownDetailTypeDropdown(false);
+                    }}
+                    className={
+                      rundownDetailType === "pendentes" ? "active" : ""
+                    }
+                  >
+                    Pendentes
+                  </p>
+                  <p
+                    onClick={() => {
+                      setRundownDetailType("vencidas");
+                      setRundownDetailTypeDropdown(false);
+                    }}
+                    className={rundownDetailType === "vencidas" ? "active" : ""}
+                  >
+                    Vencidas
+                  </p>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
           <SearchComponent type="charges" />
         </div>
         <div className="charges-display-details">
@@ -129,9 +216,31 @@ export default function Rundown() {
           <p>Vencimento</p>
         </div>
         {chargesDisplay.length !== 0
-          ? chargesDisplay.map((charge) => (
-              <ChargeComponent {...charge} key={charge.id_cobranca} />
-            ))
+          ? chargesDisplay
+              .filter((charge) => {
+                if (rundownDetailType === "pagas") {
+                  if (charge.status) {
+                    return charge;
+                  }
+                } else if (rundownDetailType === "pendentes") {
+                  if (
+                    !charge.status &&
+                    new Date(charge.vencimento) > new Date()
+                  ) {
+                    return charge;
+                  }
+                } else {
+                  if (
+                    !charge.status &&
+                    new Date(charge.vencimento) < new Date()
+                  ) {
+                    return charge;
+                  }
+                }
+              })
+              .map((charge) => (
+                <ChargeComponent {...charge} key={charge.id_cobranca} />
+              ))
           : ``}
         <LoadingComponent />
         <ResponseComponent />
