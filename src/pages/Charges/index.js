@@ -17,7 +17,7 @@ export default function Charges(props) {
 
   return (
     <div className="charges-content">
-      <div className="">
+      <div className="flex-row charges-search">
         <SearchComponent type="charges" />
       </div>
       <div className="charges-display-details">

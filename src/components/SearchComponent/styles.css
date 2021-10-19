@@ -1,0 +1,40 @@
+.search-component {
+  width: 50%;
+  height: 48px;
+}
+
+.div-input-search-component {
+  width: 100%;
+}
+
+.input-search-component {
+  border-radius: 8px;
+  outline: none;
+  background: #f7f7f7;
+  border: 1px solid #374952;
+  width: 100%;
+  z-index: -111;
+}
+
+.input-search-component::placeholder {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.25px;
+  color: #868686;
+}
+
+.button-search-component {
+  z-index: 111;
+  background: #374952;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  text-transform: uppercase;
+  color: #ffffff;
+  outline: none;
+  border: none;
+  width: 120px;
+  cursor: pointer;
+}
