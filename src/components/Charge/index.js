@@ -112,7 +112,7 @@ function EditCharge(props) {
 
   useEffect(() => {
     setInputDescription(props.descricao);
-    setInputValue(props.valor);
+    setInputValue(props.valor / 100);
     setInputDate(new Date(props.vencimento).toISOString().substr(0, 10));
   }, [chargesDisplay]);
 

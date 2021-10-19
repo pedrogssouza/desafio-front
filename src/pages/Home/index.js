@@ -3,8 +3,34 @@ import clients from "../../assets/clients.svg";
 import charges from "../../assets/charges.svg";
 import CountsContainer from "../../components/HomeCountComponent/index.js";
 import LoadingComponent from "../../components/Loading";
+import useApi from "../../services/useApi";
+import { useEffect, useState } from "react";
 
-function Home() {
+export default function Home() {
+  const { getRundownFunction } = useApi();
+  const [clientsOk, setClientsOk] = useState([]);
+  const [clientsNotOk, setClientsNotOk] = useState([]);
+  const [chargesPaid, setChargesPaid] = useState([]);
+  const [chargesPending, setChargesPending] = useState([]);
+  const [chargesExpired, setChargesExpired] = useState([]);
+
+  async function getRundowns() {
+    let promiseFinish = await getRundownFunction("status");
+    setClientsOk(promiseFinish);
+    promiseFinish = await getRundownFunction("status?inadimplente");
+    setClientsNotOk(promiseFinish);
+    promiseFinish = await getRundownFunction("pagas?paga");
+    setChargesPaid(promiseFinish);
+    promiseFinish = await getRundownFunction("vencimentos");
+    setChargesPending(promiseFinish);
+    promiseFinish = await getRundownFunction("vencimentos?vencida");
+    setChargesExpired(promiseFinish);
+  }
+
+  useEffect(() => {
+    getRundowns();
+  }, []);
+
   const containers = [
     {
       title: "Clientes",
@@ -13,12 +39,12 @@ function Home() {
         {
           color: "green",
           type: "Em dia",
-          count: 0,
+          count: clientsOk.length || 0,
         },
         {
           color: "red",
           type: "Inadimplentes",
-          count: 0,
+          count: clientsNotOk.length || 0,
         },
       ],
     },
@@ -27,23 +53,24 @@ function Home() {
       img: charges,
       array: [
         {
+          color: "green",
+          type: "Pagas",
+          count: chargesPaid.length || 0,
+        },
+        {
           color: "blue",
           type: "Previstas",
-          count: 0,
+          count: chargesPending.length || 0,
         },
         {
           color: "red",
           type: "Vencidas",
-          count: 0,
-        },
-        {
-          color: "green",
-          type: "Pagas",
-          count: 0,
+          count: chargesExpired.length || 0,
         },
       ],
     },
   ];
+
   return (
     <div className="home-content">
       {containers.map((container) => {
@@ -59,5 +86,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home;

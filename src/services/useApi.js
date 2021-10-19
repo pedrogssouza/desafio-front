@@ -344,6 +344,30 @@ export default function useApi() {
     });
   }
 
+  async function getRundownFunction(endPoint) {
+    setResponse({});
+
+    setLoading(true);
+
+    const response = await getProtectedRequest(
+      `/relatorios/${endPoint}`,
+      token
+    );
+
+    const responseData = await response.json();
+
+    setLoading(false);
+
+    if (response.ok) {
+      return responseData;
+    }
+
+    setResponse({
+      data: responseData,
+      type: "error",
+    });
+  }
+
   return {
     signInFunction,
     signUpFunction,
@@ -357,5 +381,6 @@ export default function useApi() {
     addChargeFunction,
     editChargeFunction,
     deleteChargeFunction,
+    getRundownFunction,
   };
 }

@@ -1,8 +1,13 @@
+import { useHistory } from "react-router";
 import "./styles.css";
 
 function CountComponent(props) {
+  const history = useHistory();
   return (
-    <div className={`${props.color} count-div flex-row items-center mt-md `}>
+    <div
+      className={`${props.color} count-div flex-row items-center mt-md `}
+      onClick={() => history.push("/")}
+    >
       <p className="count-type">{props.type}</p>
       <p className="count">{props.count}</p>
     </div>
